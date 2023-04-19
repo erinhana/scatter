@@ -37,7 +37,7 @@ Priorities
 5. Could be a responsive website and therefore could be used on mobile
 6. A user should be able to reset a password
 
-Will Not Have:
+### Will Not Have:
 
 1. It will not be able to connect to existing Apple/Android applications 
 2. It will not be able to send user push notifications/reminders
