@@ -31,11 +31,14 @@ Should Have:
 Could Have:
 
 1. The application could have more features such as Trends and a Password Manager
-2. The application could have different user plans, a basic plan and a premium plan
-3. Could be a responsive website and therefore could be used on mobile
-4. A user should be able to reset a password
+2. A tasks table
+3. An obstacles table
+4. A distractions table
+5. Could be a responsive website and therefore could be used on mobile
+6. A user should be able to reset a password
 
 Will Not Have:
 
 1. It will not be able to connect to existing Apple/Android applications 
 2. It will not be able to send user push notifications/reminders
+
