@@ -13,9 +13,13 @@ Must Have:
 
 1. A user must be able to register an account
 2. A user must be able to log in
-3. A user must be able to add, edit, delete and update to-do items
-4. Add, edit, delete obstacles from to-do items
-5. Manage a list of distractions
+3. A user must be able to log out
+4. A user must be able to delete an account
+5. A user must be able to add, edit, delete and update to-do items
+6. Manage a list of obstacles
+7. Add, edit, delete obstacles from to-do items
+8. Manage a list of distractions
+9. Add, edit, delete distractions from to-do items
 
 Should Have:
 
@@ -28,7 +32,8 @@ Could Have:
 
 1. The application could have more features such as Trends and a Password Manager
 2. The application could have different user plans, a basic plan and a premium plan
-3. Could be a responsive website and therefore used on mobile
+3. Could be a responsive website and therefore could be used on mobile
+4. A user should be able to reset a password
 
 Will Not Have:
 
