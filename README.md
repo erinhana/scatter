@@ -1,7 +1,7 @@
 # scatter
 Repository for Productivity App- COE Project
 
-Problem Definition 
+## Problem Definition 
 
 
 The purpose of this application is to help those who are described as being scatter-brained, it aims to assist people with organisation, time management and tracking their day-to-day life. Everyday life involves many tasks, obstacles, and distractions in which this application can assist the users with.
@@ -9,7 +9,7 @@ The purpose of this application is to help those who are described as being scat
 
 Priorities 
 
-Must Have:
+### Must Have:
 
 1. A user must be able to register an account
 2. A user must be able to log in
@@ -21,14 +21,14 @@ Must Have:
 8. Manage a list of distractions
 9. Add, edit, delete distractions from to-do items
 
-Should Have:
+### Should Have:
 
 1. Tracking carried out on a day-to-day basis
 2. Organisation: a user should have a to-do list
 3. A user should be able to add a list of obstacles
 4. A user should be able to add a list of distractions
 
-Could Have:
+### Could Have:
 
 1. The application could have more features such as Trends and a Password Manager
 2. A tasks table
