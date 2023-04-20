@@ -44,9 +44,9 @@ The purpose of this application is to help those who are described as being scat
 %%{init: {'theme':'default'}}%%
 erDiagram
    
-    USER ||--o{ TODOS : manages
-    USER ||--o{ DISTRACTIONS : "encounters"
-    USER ||--o{ OBSTACLES : "encounters"
+    USERS ||--o{ TODOS : manages
+    USERS ||--o{ DISTRACTIONS : "encounters"
+    USERS ||--o{ OBSTACLES : "encounters"
     OBSTACLES ||--o{ACTIVITIES : "affects"
     DISTRACTIONS ||--o{ACTIVITIES : "affects"
     TODOS ||--o{ACTIVITIES : "contains"
