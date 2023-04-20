@@ -50,5 +50,5 @@ erDiagram
     OBSTACLES ||--o{ACTIVITIES : "affects"
     DISTRACTIONS ||--o{ACTIVITIES : "affects"
     TODOS ||--o{ACTIVITIES : "contains"
-    ```
+```
 
