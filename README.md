@@ -38,7 +38,8 @@ The purpose of this application is to help those who are described as being scat
 1. A user will be able to connect to existing Apple/Android applications 
 2. A user will be able to send user push notifications/reminders
 
-
+```mermaid
+%%{init: {'theme':'default'}}%%
 erDiagram
    
     USER ||--o{ TODOS : manages
@@ -47,4 +48,5 @@ erDiagram
     OBSTACLES ||--o{ACTIVITIES : "affects"
     DISTRACTIONS ||--o{ACTIVITIES : "affects"
     TODOS ||--o{ACTIVITIES : "contains"
+    ```
 
