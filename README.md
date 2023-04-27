@@ -54,5 +54,68 @@ erDiagram
 
 ### Entity Relationship Diagram
 
+```mermaid
+%%{init: {'theme':'default'}}%%
+erDiagram
+    Users ||--o{ Todos  : manages
+    Users {
+        int id pk 
+        string first_name
+        string last_name
+        string email_adress
+        char(60) password
+
+    }
+    Users ||--o{ Blockers : face
+    Blockers {
+        int id pk 
+        int user_id fk
+        string title
+        string description 
+        datetime created_at
+        datetime updated_at
+        int blocker_type_id
+    }
+    Blockers ||--|{ Activity_blockers : create
+
+    Blocker_types ||--|{ Blockers : are
+
+    Blocker_types {
+        int id pk 
+        string description 
+        
+    }
+
+    Users ||--o{ Todos : manages
+    Todos {
+        int id pk
+        int user_id fk
+        string description
+        string deadline
+        datetime created_at
+        datetime updated_at
+        datetime completed_at
+
+    }
+    Todos ||--|{ Activities : contains
+    Activities {
+        int id pk 
+        int todo_id fk
+        string title
+        string description 
+        datetime created_at
+        datetime updated_at
+        int time_spent
+
+    }
+    Activities ||--|{Activity_blockers : face
+    Activity_blockers {
+        int id pk 
+        int blocker_id fk
+        int activity_id fk
+        int time_spent
+
+    }
+ ```
 
 
