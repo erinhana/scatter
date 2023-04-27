@@ -52,3 +52,7 @@ erDiagram
     TODOS ||--o{ACTIVITIES : "contains"
 ```
 
+### Entity Relationship Diagram
+
+
+
