@@ -63,7 +63,7 @@ erDiagram
         string first_name
         string last_name
         string email_adress
-        char(60) password
+        varchar(100) password
 
     }
     Users ||--o{ Blockers : face
