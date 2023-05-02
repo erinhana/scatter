@@ -62,7 +62,7 @@ erDiagram
         int id pk 
         string first_name
         string last_name
-        string email_adress
+        string email_address
         varchar(100) password
 
     }
