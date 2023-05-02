@@ -91,7 +91,7 @@ erDiagram
         int id pk
         int user_id fk
         string description
-        string deadline
+        datetime deadline
         datetime created_at
         datetime updated_at
         datetime completed_at
