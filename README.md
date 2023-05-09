@@ -45,8 +45,7 @@ The purpose of this application is to help those who are described as being scat
 erDiagram
    
     USERS ||--o{ TODOS : manages
-    USERS ||--o{ DISTRACTIONS : "encounters"
-    USERS ||--o{ OBSTACLES : "encounters"
+    USERS ||--o{ BLOCKERS : "encounters"
     OBSTACLES ||--o{ACTIVITIES : "affects"
     DISTRACTIONS ||--o{ACTIVITIES : "affects"
     TODOS ||--o{ACTIVITIES : "contains"
