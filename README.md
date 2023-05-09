@@ -46,10 +46,9 @@ erDiagram
    
     USERS ||--o{ TODOS : manages
     USERS ||--o{ BLOCKERS : "encounters"
-    OBSTACLES ||--o{ACTIVITIES : "affects"
-    DISTRACTIONS ||--o{ACTIVITIES : "affects"
+    BLOCKERS ||--o{ACTIVITIES : "affects"
     TODOS ||--o{ACTIVITIES : "contains"
-```
+    ```
 
 ### Entity Relationship Diagram
 
