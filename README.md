@@ -116,4 +116,77 @@ erDiagram
     }
  ```
 
+### API Specifications
+
+## Users
+
+Create new user
+POST https://scatter.com/users
+
+Return all users
+GET https://scatter.com/users
+
+Update a user
+PUT https://scatter.com/users/{user_id}
+
+Return certain user
+GET https://scatter.com/users/{user_id}
+
+Delete a certain user
+DEL https://scatter.com/users/{user_id}
+
+
+## To-dos
+
+Create new to-do
+POST https://scatter.com/todos
+
+Return all to-dos
+GET https://scatter.com/todos
+
+Update a to-do
+PUT https://scatter.com/users/{todo_id}
+
+Return a certain to-do
+GET https://scatter.com/users/{todo_id}
+
+Delete a certain to-do
+DEL https://scatter.com/users/{todo_id}
+
+
+## Activities
+
+Create new activity
+POST https://scatter.com/activities
+
+Return all activities
+GET https://scatter.com/activities
+
+Update an activity
+PUT https://scatter.com/todos/{activity_id}
+
+Return a certain activity
+GET https://scatter.com/todos/{activity_id}
+
+Delete a certain activity
+DEL https://scatter.com/todos/{activity_id}
+
+
+## Blockers
+
+Create new blocker
+POST https://scatter.com/blockers/{blocker_type_id}
+
+Return all blockers
+GET https://scatter.com/blockers
+
+Update a blocker
+PUT https://scatter.com/blockers/{blocker_type_id}
+
+Return a certain blocker
+GET https://scatter.com/blockers/{blocker_type_id}
+
+Delete a certain blocker
+DEL https://scatter.com/blockers/{blocker_type_id}
+
 
