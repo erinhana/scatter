@@ -46,8 +46,7 @@ erDiagram
    
     USER ||--o{ TODOS : manages
     USER ||--o{ BLOCKERS : "encounters"
-    OBSTACLES ||--o{ACTIVITIES : "affects"
-    DISTRACTIONS ||--o{ACTIVITIES : "affects"
+    BLOCKERS ||--o{ACTIVITIES : "affects"
     TODOS ||--o{ACTIVITIES : "contains"
 ```
 
