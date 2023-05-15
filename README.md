@@ -126,6 +126,8 @@ POST https://scatter.com/users
 Return all users
 GET https://scatter.com/users
 
+Query string example: ?firstname=erin
+
 Update a user
 PUT https://scatter.com/users/{user_id}
 
@@ -145,13 +147,13 @@ Return all to-dos
 GET https://scatter.com/todos
 
 Update a to-do
-PUT https://scatter.com/users/{todo_id}
+PUT https://scatter.com/todos/{todo_id}
 
 Return a certain to-do
-GET https://scatter.com/users/{todo_id}
+GET https://scatter.com/todos/{todo_id}
 
 Delete a certain to-do
-DEL https://scatter.com/users/{todo_id}
+DEL https://scatter.com/todos/{todo_id}
 
 
 ## Activities
@@ -162,31 +164,39 @@ POST https://scatter.com/activities
 Return all activities
 GET https://scatter.com/activities
 
+Return all activity types
+GET https://scatter.com/activities/types
+
 Update an activity
-PUT https://scatter.com/todos/{activity_id}
+PUT https://scatter.com/activities/{activity_id}
 
 Return a certain activity
-GET https://scatter.com/todos/{activity_id}
+GET https://scatter.com/activities/{activity_id}
 
 Delete a certain activity
-DEL https://scatter.com/todos/{activity_id}
+DEL https://scatter.com/activities/{activity_id}
 
 
 ## Blockers
 
 Create new blocker
-POST https://scatter.com/blockers/{blocker_type_id}
+POST https://scatter.com/blockers
 
 Return all blockers
 GET https://scatter.com/blockers
 
+Return all blocker types
+GET https://scatter.com/blockers/types
+
 Update a blocker
-PUT https://scatter.com/blockers/{blocker_type_id}
+PUT https://scatter.com/blockers/{blocker_id}
 
 Return a certain blocker
-GET https://scatter.com/blockers/{blocker_type_id}
+GET https://scatter.com/blockers/{blocker_id}
 
 Delete a certain blocker
-DEL https://scatter.com/blockers/{blocker_type_id}
+DEL https://scatter.com/blockers/{blocker_id}
+
+
 
 
