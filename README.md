@@ -159,43 +159,43 @@ DEL https://scatter.com/todos/{todo_id}
 ## Activities
 
 Create new activity
-POST https://scatter.com/activities
+POST https://scatter.com/todos/{todoId}/activities
 
 Return all activities
-GET https://scatter.com/activities
+GET https://scatter.com/todos/{todoId}/activities
 
 Return all activity types
 GET https://scatter.com/activities/types
 
 Update an activity
-PUT https://scatter.com/activities/{activity_id}
+PUT https://scatter.com/todos/{todoId}/activities/{activity_id}
 
 Return a certain activity
-GET https://scatter.com/activities/{activity_id}
+GET https://scatter.com/todos/{todoId}/activities/{activity_id}
 
 Delete a certain activity
-DEL https://scatter.com/activities/{activity_id}
+DEL https://scatter.com/todos/{todoId}/activities{activity_id}
 
 
 ## Blockers
 
 Create new blocker
-POST https://scatter.com/blockers
+POST https://scatter.com/activities/{activityId}/blockers
 
 Return all blockers
-GET https://scatter.com/blockers
+GET https://scatter.com/activities/{activityId}/blockers
 
 Return all blocker types
 GET https://scatter.com/blockers/types
 
 Update a blocker
-PUT https://scatter.com/blockers/{blocker_id}
+PUT https://scatter.com/activities/{activityId}/blockers/{blocker_id}
 
 Return a certain blocker
-GET https://scatter.com/blockers/{blocker_id}
+GET https://scatter.com/activities/{activityId}blockers/{blocker_id}
 
 Delete a certain blocker
-DEL https://scatter.com/blockers/{blocker_id}
+DEL https://scatter.com/activities/{activityId}blockers/{blocker_id}
 
 
 
