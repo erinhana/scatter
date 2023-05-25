@@ -126,6 +126,9 @@ POST https://scatter.com/users
 Return all users
 GET https://scatter.com/users
 
+Get a user
+GET https://scatter.com/users/{user_id}
+
 Query string example: ?firstname=erin
 
 Update a user
