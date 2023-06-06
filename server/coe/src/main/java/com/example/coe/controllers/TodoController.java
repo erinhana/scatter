@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/todos")
-public class TodosController {
+public class TodoController {
     @GetMapping
     public ResponseEntity<String> getAllTodos(){
         return ResponseEntity.ok("todos");

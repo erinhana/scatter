@@ -6,19 +6,22 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/activities")
-public class ActivitiesController {
+public class ActivityController {
     @GetMapping
     public ResponseEntity<String> getAllActivities(){
         return ResponseEntity.ok("Activities");
     }
+
     @GetMapping(value="/{activityId}")
     public ResponseEntity<String> getActivity(@PathVariable String activityId){
-        return ResponseEntity.ok("Activities" + activityIdId);
+        return ResponseEntity.ok("Activities" + activityId);
     }
+
     @PostMapping
     public ResponseEntity<String> createActivities(){
         return ResponseEntity.ok("Activity created");
     }
+
     @PutMapping(value = "/{activityId}")
     public ResponseEntity<String> updateActivity(@PathVariable String activityId) {
         return ResponseEntity.ok("Activity updated: " + activityId);

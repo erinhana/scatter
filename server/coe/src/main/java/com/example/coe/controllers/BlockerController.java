@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/blockers")
-public class BlockersController {
+public class BlockerController {
     @GetMapping
     public ResponseEntity<String> getAllBlockers(){
         return ResponseEntity.ok("Blockers");
