@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/activities")
 public class ActivityController {
     @GetMapping
-    public ResponseEntity<String> getAllActivities(){
+    public ResponseEntity<String> getAllActivities() {
         return ResponseEntity.ok("Activities");
     }
 
-    @GetMapping(value="/{activityId}")
-    public ResponseEntity<String> getActivity(@PathVariable String activityId){
+    @GetMapping(value = "/{activityId}")
+    public ResponseEntity<String> getActivity(@PathVariable String activityId) {
         return ResponseEntity.ok("Activities" + activityId);
     }
 
     @PostMapping
-    public ResponseEntity<String> createActivities(){
+    public ResponseEntity<String> createActivities() {
         return ResponseEntity.ok("Activity created");
     }
 

@@ -8,17 +8,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/blockers")
 public class BlockerController {
     @GetMapping
-    public ResponseEntity<String> getAllBlockers(){
+    public ResponseEntity<String> getAllBlockers() {
         return ResponseEntity.ok("Blockers");
     }
-    @GetMapping(value="/{blockerId}")
-    public ResponseEntity<String> getBlocker(@PathVariable String blockerId){
+
+    @GetMapping(value = "/{blockerId}")
+    public ResponseEntity<String> getBlocker(@PathVariable String blockerId) {
         return ResponseEntity.ok("Blockers" + blockerId);
     }
+
     @PostMapping
-    public ResponseEntity<String> createBlockers(){
+    public ResponseEntity<String> createBlockers() {
         return ResponseEntity.ok("Blocker created");
     }
+
     @PutMapping(value = "/{blockerId}")
     public ResponseEntity<String> updateBlocker(@PathVariable String blockerId) {
         return ResponseEntity.ok("Blocker updated: " + blockerId);

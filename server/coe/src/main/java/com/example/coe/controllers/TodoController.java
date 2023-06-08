@@ -8,17 +8,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/todos")
 public class TodoController {
     @GetMapping
-    public ResponseEntity<String> getAllTodos(){
+    public ResponseEntity<String> getAllTodos() {
         return ResponseEntity.ok("todos");
     }
-    @GetMapping(value="/{todoId}")
-    public ResponseEntity<String> getUser(@PathVariable String todoId){
+
+    @GetMapping(value = "/{todoId}")
+    public ResponseEntity<String> getUser(@PathVariable String todoId) {
         return ResponseEntity.ok("Todos" + todoId);
     }
+
     @PostMapping
-    public ResponseEntity<String> createTodo(){
+    public ResponseEntity<String> createTodo() {
         return ResponseEntity.ok("Todo created");
     }
+
     @PutMapping(value = "/{todoId}")
     public ResponseEntity<String> updateTodo(@PathVariable String todoId) {
         return ResponseEntity.ok("Todo updated: " + todoId);
