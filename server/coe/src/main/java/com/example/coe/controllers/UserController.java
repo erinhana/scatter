@@ -1,6 +1,7 @@
 package com.example.coe.controllers;
 
 import com.example.coe.models.users.CreateUserViewModel;
+import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailsViewModel;
 import com.example.coe.models.users.UserViewModel;
 import jakarta.validation.Valid;
@@ -51,17 +52,17 @@ public class UserController {
 
 
     @PutMapping(value = "/{userId}")
-    public ResponseEntity<String> updateUser(@PathVariable String userId) {
-        return ResponseEntity.ok("User updated: " + userId);
+    public ResponseEntity<Void> updateUser(@PathVariable String userId, @RequestBody @Valid UpdateUserViewModel model) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping(value = "/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable String userId) {
-        return ResponseEntity.ok("User deleted: " + userId);
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping(value = "/{userId}/todos")
-    public ResponseEntity<String> getAllListsForUser(@PathVariable String userId) {
+    public ResponseEntity<String> getAllTodosForUser(@PathVariable String userId) {
         return ResponseEntity.ok("Todos for user id: " + userId);
     }
 }
