@@ -1,15 +1,25 @@
 package com.example.coe.controllers;
 
+import com.example.coe.models.activities.ActivityViewModel;
+import com.example.coe.models.todos.TodoViewModel;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/activities")
+@Tag(name = "Activities")
 public class ActivityController {
     @GetMapping
-    public ResponseEntity<String> getAllActivities() {
-        return ResponseEntity.ok("Activities");
+    @Operation(summary = "Get All Activities")
+    public ResponseEntity<List<ActivityViewModel>> getAllActivities() {
+
+        var todos= List.of(new ActivityViewModel(1, 1, "test activity", "test activity description"));
+        return null;
     }
 
     @GetMapping(value = "/{activityId}")
