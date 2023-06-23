@@ -27,6 +27,11 @@ public class ActivityController {
         return ResponseEntity.ok("Activities" + activityId);
     }
 
+    @GetMapping(value = "/{types}")
+    public ResponseEntity<String> getActivityType(@PathVariable String activityId) {
+        return ResponseEntity.ok("Activities" + activityId);
+    }
+
     @PostMapping
     public ResponseEntity<String> createActivities() {
         return ResponseEntity.ok("Activity created");
