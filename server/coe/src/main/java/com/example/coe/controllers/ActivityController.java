@@ -1,9 +1,13 @@
 package com.example.coe.controllers;
 
+import com.example.coe.models.activities.ActivityDetailViewModel;
 import com.example.coe.models.activities.ActivityViewModel;
+import com.example.coe.models.activities.CreateActivityViewModel;
 import com.example.coe.models.todos.TodoViewModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +37,9 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createActivities() {
-        return ResponseEntity.ok("Activity created");
+    public ResponseEntity<ActivityViewModel> createActivity(@RequestBody @Valid CreateActivityViewModel model) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ActivityViewModel(1, 1, model.getTitle(), model.getDescription()));
+
     }
 
     @PutMapping(value = "/{activityId}")

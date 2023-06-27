@@ -2,12 +2,11 @@ package com.example.coe.controllers;
 
 import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
-import com.example.coe.models.users.UserDetailsViewModel;
+import com.example.coe.models.users.UserDetailViewModel;
 import com.example.coe.models.users.UserViewModel;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,9 +23,9 @@ public class UserController {
     }
 
     @GetMapping(value = "/{userId}")
-    public ResponseEntity<UserDetailsViewModel> getUser(@PathVariable int userId) {
+    public ResponseEntity<UserDetailViewModel> getUser(@PathVariable int userId) {
         return ResponseEntity.ok(
-                new UserDetailsViewModel(
+                new UserDetailViewModel(
                         userId,
                         "testemail@test.com",
                         "Test",
@@ -38,8 +37,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDetailsViewModel> createUser(@RequestBody @Valid CreateUserViewModel model) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new UserDetailsViewModel(
+    public ResponseEntity<UserDetailViewModel> createUser(@RequestBody @Valid CreateUserViewModel model) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UserDetailViewModel(
                 1,
                 model.getEmail(),
                 model.getFirstName(),

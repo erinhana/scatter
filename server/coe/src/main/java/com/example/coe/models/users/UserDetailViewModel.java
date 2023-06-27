@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UserDetailsViewModel {
+public class UserDetailViewModel {
 
     private int id;
     private String email;
