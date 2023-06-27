@@ -51,8 +51,8 @@ public class UserController {
 
 
     @PutMapping(value = "/{userId}")
-    public ResponseEntity<Void> updateUser(@PathVariable int userId, @RequestBody @Valid UpdateUserViewModel model) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    public ResponseEntity<UserViewModel> updateUser(@PathVariable @Valid UpdateUserViewModel model) {
+        return ResponseEntity.ok(new UserViewModel(2, model.getEmail(), model.getFirstName(), model.getLastName()));
     }
 
     @DeleteMapping(value = "/{userId}")
