@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -27,8 +28,8 @@ public class ActivityController {
     }
 
     @GetMapping(value = "/{activityId}")
-    public ResponseEntity<String> getActivity(@PathVariable String activityId) {
-        return ResponseEntity.ok("Activities" + activityId);
+    public ResponseEntity<ActivityDetailViewModel> getActivity(@PathVariable int activityId) {
+        return ResponseEntity.ok(new ActivityDetailViewModel(activityId, 1, "Clean room", "Activity description", LocalDateTime.now(), LocalDateTime.now(), 15));
     }
 
     @GetMapping(value = "/{types}")
@@ -48,8 +49,8 @@ public class ActivityController {
     }
 
     @DeleteMapping(value = "/{activityId}")
-    public ResponseEntity<String> deleteActivity(@PathVariable String activityId) {
-        return ResponseEntity.ok("Activity deleted: " + activityId);
+    public ResponseEntity<Void> deleteActivity(@PathVariable int activityId) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
 

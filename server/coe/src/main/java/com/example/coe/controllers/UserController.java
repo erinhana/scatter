@@ -51,12 +51,12 @@ public class UserController {
 
 
     @PutMapping(value = "/{userId}")
-    public ResponseEntity<Void> updateUser(@PathVariable String userId, @RequestBody @Valid UpdateUserViewModel model) {
+    public ResponseEntity<Void> updateUser(@PathVariable int userId, @RequestBody @Valid UpdateUserViewModel model) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping(value = "/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

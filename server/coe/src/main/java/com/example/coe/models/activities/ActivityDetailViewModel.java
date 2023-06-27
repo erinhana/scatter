@@ -21,6 +21,5 @@ public class ActivityDetailViewModel {
     private LocalDateTime updatedAt;
     private int timeSpent;
 
-    public ActivityDetailViewModel(int id, int todoId, String title, String description) {
-    }
+
 }
