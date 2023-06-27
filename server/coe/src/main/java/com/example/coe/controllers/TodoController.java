@@ -44,7 +44,7 @@ public class TodoController {
     }
 
     @DeleteMapping(value = "/{todoId}")
-    public ResponseEntity<String> deleteTodo(@PathVariable int todoId) {
-        return ResponseEntity.ok("Todo deleted: " + todoId);
+    public ResponseEntity<Void> deleteTodo(@PathVariable int todoId) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
