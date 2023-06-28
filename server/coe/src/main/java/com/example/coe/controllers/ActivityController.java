@@ -23,7 +23,7 @@ public class ActivityController {
     @Operation(summary = "Get All Activities")
     public ResponseEntity<List<ActivityViewModel>> getAllActivities() {
 
-        var todos= List.of(new ActivityViewModel(1, 1, "test activity", "test activity description"));
+        var activities= List.of(new ActivityViewModel(1, 1, "test activity", "test activity description"));
         return null;
     }
 
