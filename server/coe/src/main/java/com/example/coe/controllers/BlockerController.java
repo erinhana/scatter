@@ -1,7 +1,11 @@
 package com.example.coe.controllers;
 
+import com.example.coe.models.blockers.BlockerViewModel;
+import com.example.coe.models.blockers.CreateBlockerViewModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +28,8 @@ public class BlockerController {
 
     @PostMapping
     @Operation(summary = "Create Blocker")
-    public ResponseEntity<String> createBlocker() {
-        return ResponseEntity.ok("Blocker created");
+    public ResponseEntity<BlockerViewModel> createBlocker(@RequestBody @Valid CreateBlockerViewModel model) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BlockerViewModel(1, 1, model.getTitle(), model.getDescription(), 1));
     }
 
     @PutMapping(value = "/{blockerId}")
