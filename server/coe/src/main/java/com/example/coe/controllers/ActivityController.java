@@ -3,6 +3,7 @@ package com.example.coe.controllers;
 import com.example.coe.models.activities.ActivityDetailViewModel;
 import com.example.coe.models.activities.ActivityViewModel;
 import com.example.coe.models.activities.CreateActivityViewModel;
+import com.example.coe.models.activities.UpdateActivityViewModel;
 import com.example.coe.models.todos.TodoViewModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -48,8 +49,8 @@ public class ActivityController {
 
     @PutMapping(value = "/{activityId}")
     @Operation(summary = "Update Activity")
-    public ResponseEntity<String> updateActivity(@PathVariable String activityId) {
-        return ResponseEntity.ok("Activity updated: " + activityId);
+    public ResponseEntity<ActivityViewModel> updateActivity(@PathVariable @Valid UpdateActivityViewModel model) {
+        return ResponseEntity.ok(new ActivityViewModel(3, 3, model.getTitle(), model.getDescription()));
     }
 
     @DeleteMapping(value = "/{activityId}")
