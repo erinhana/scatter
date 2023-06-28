@@ -1,5 +1,6 @@
 package com.example.coe.controllers;
 
+import com.example.coe.models.blockers.BlockerDetailViewModel;
 import com.example.coe.models.blockers.BlockerViewModel;
 import com.example.coe.models.blockers.CreateBlockerViewModel;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -25,8 +27,8 @@ public class BlockerController {
 
     @GetMapping(value = "/{blockerId}")
     @Operation(summary = "Get Blocker")
-    public ResponseEntity<String> getBlocker(@PathVariable String blockerId) {
-        return ResponseEntity.ok("Blockers" + blockerId);
+    public ResponseEntity<BlockerDetailViewModel> getBlocker(@PathVariable int blockerId) {
+        return ResponseEntity.ok(new BlockerDetailViewModel(blockerId, 1, "Hoover broken", "Unable to clean room as hoover is broken", LocalDateTime.now(), LocalDateTime.now(), 1));
     }
 
     @PostMapping
