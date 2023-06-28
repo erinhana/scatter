@@ -1,8 +1,6 @@
-package com.example.coe.models.todos;
+package com.example.coe.models.blockers;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +12,10 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateTodoViewModel {
+public class CreateBlockerViewModel {
     @NotBlank
     private int userId;
+    private String title;
     private String description;
-    private LocalDateTime deadline;
+    private int blockerTypeId;
 }
