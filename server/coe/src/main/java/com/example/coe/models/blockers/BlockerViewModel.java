@@ -1,4 +1,4 @@
-package com.example.coe.models.activities;
+package com.example.coe.models.blockers;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +9,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ActivityViewModel {
+public class BlockerViewModel {
 
     private int id;
-    private int todoId;
+    private int userId;
     private String title;
     private String description;
+    private int blockerTypeId;
 
 
 }
