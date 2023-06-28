@@ -3,6 +3,7 @@ package com.example.coe.controllers;
 import com.example.coe.models.blockers.BlockerDetailViewModel;
 import com.example.coe.models.blockers.BlockerViewModel;
 import com.example.coe.models.blockers.CreateBlockerViewModel;
+import com.example.coe.models.blockers.UpdateBlockerViewModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -31,21 +32,27 @@ public class BlockerController {
         return ResponseEntity.ok(new BlockerDetailViewModel(blockerId, 1, "Hoover broken", "Unable to clean room as hoover is broken", LocalDateTime.now(), LocalDateTime.now(), 1));
     }
 
+    @GetMapping(value = "/{types}")
+    @Operation(summary = "Get Blocker Type")
+    public ResponseEntity<String> getBlockerType(@PathVariable String blockerTypeId) {
+        return ResponseEntity.ok("Blockers" + blockerTypeId);
+    }
+
     @PostMapping
     @Operation(summary = "Create Blocker")
     public ResponseEntity<BlockerViewModel> createBlocker(@RequestBody @Valid CreateBlockerViewModel model) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new BlockerViewModel(1, 1, model.getTitle(), model.getDescription()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BlockerViewModel(1, 1, model.getTitle(), model.getDescription, 1()));
     }
 
     @PutMapping(value = "/{blockerId}")
     @Operation(summary = "Update Blocker")
-    public ResponseEntity<String> updateBlocker(@PathVariable String blockerId) {
-        return ResponseEntity.ok("Blocker updated: " + blockerId);
+    public ResponseEntity<BlockerViewModel> updateBlocker(@PathVariable @Valid UpdateBlockerViewModel model) {
+        return ResponseEntity.ok(new BlockerViewModel(2, 2, model.getTitle(), model.getDescription(), 2));
     }
 
     @DeleteMapping(value = "/{blockerId}")
     @Operation(summary = "Delete Blocker")
-    public ResponseEntity<String> deleteBlocker(@PathVariable String blockerId) {
-        return ResponseEntity.ok("Blocker deleted: " + blockerId);
+    public ResponseEntity<Void> deleteBlocker(@PathVariable int blockerId) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
