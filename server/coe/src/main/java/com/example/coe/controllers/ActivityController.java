@@ -28,27 +28,32 @@ public class ActivityController {
     }
 
     @GetMapping(value = "/{activityId}")
+    @Operation(summary = "Get Activity")
     public ResponseEntity<ActivityDetailViewModel> getActivity(@PathVariable int activityId) {
         return ResponseEntity.ok(new ActivityDetailViewModel(activityId, 1, "Clean room", "Activity description", LocalDateTime.now(), LocalDateTime.now(), 15));
     }
 
     @GetMapping(value = "/{types}")
+    @Operation(summary = "Get Activity Type")
     public ResponseEntity<String> getActivityType(@PathVariable String activityId) {
         return ResponseEntity.ok("Activities" + activityId);
     }
 
     @PostMapping
+    @Operation(summary = "Create Activity")
     public ResponseEntity<ActivityViewModel> createActivity(@RequestBody @Valid CreateActivityViewModel model) {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ActivityViewModel(1, 1, model.getTitle(), model.getDescription()));
 
     }
 
     @PutMapping(value = "/{activityId}")
+    @Operation(summary = "Update Activity")
     public ResponseEntity<String> updateActivity(@PathVariable String activityId) {
         return ResponseEntity.ok("Activity updated: " + activityId);
     }
 
     @DeleteMapping(value = "/{activityId}")
+    @Operation(summary = "Delete Activity")
     public ResponseEntity<Void> deleteActivity(@PathVariable int activityId) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

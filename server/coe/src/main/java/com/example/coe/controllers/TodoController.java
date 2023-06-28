@@ -28,6 +28,7 @@ public class TodoController {
     }
 
     @GetMapping(value = "/{todoId}")
+    @Operation(summary = "Get Todo")
     public ResponseEntity<TodoDetailViewModel> getTodo(@PathVariable int todoId) {
         return ResponseEntity.ok(new TodoDetailViewModel(todoId, 1, "test todo", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now()));
     }
@@ -39,11 +40,13 @@ public class TodoController {
     }
 
     @PutMapping(value = "/{todoId}")
+    @Operation(summary = "Update Todo")
     public ResponseEntity<TodoViewModel> updateTodo(@PathVariable @Valid UpdateTodoViewModel model) {
         return ResponseEntity.ok(new TodoViewModel(1, 1, model.getDescription()));
     }
 
     @DeleteMapping(value = "/{todoId}")
+    @Operation(summary = "Delete Todo")
     public ResponseEntity<Void> deleteTodo(@PathVariable int todoId) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
