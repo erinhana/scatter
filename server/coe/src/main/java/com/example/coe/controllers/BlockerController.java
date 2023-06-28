@@ -7,8 +7,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/blockers")
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.*;
 public class BlockerController {
     @GetMapping
     @Operation(summary = "Get All Blockers")
-    public ResponseEntity<String> getAllBlockers() {
-        return ResponseEntity.ok("Blockers");
+    public ResponseEntity<List<BlockerViewModel>> getAllBlockers() {
+
+        var blockers= List.of(new BlockerViewModel(1, 1, "test blocker", "test blocker description", 1));
+        return null;
     }
 
     @GetMapping(value = "/{blockerId}")
@@ -29,7 +32,7 @@ public class BlockerController {
     @PostMapping
     @Operation(summary = "Create Blocker")
     public ResponseEntity<BlockerViewModel> createBlocker(@RequestBody @Valid CreateBlockerViewModel model) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new BlockerViewModel(1, 1, model.getTitle(), model.getDescription(), 1));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BlockerViewModel(1, 1, model.getTitle(), model.getDescription()));
     }
 
     @PutMapping(value = "/{blockerId}")
