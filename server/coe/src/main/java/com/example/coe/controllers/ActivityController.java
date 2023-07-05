@@ -34,10 +34,10 @@ public class ActivityController {
         return ResponseEntity.ok(new ActivityDetailViewModel(activityId, 1, "Clean room", "Activity description", LocalDateTime.now(), LocalDateTime.now(), 15));
     }
 
-    @GetMapping(value = "/{types}")
+    @GetMapping(value = "/types")
     @Operation(summary = "Get Activity Type")
-    public ResponseEntity<String> getActivityType(@PathVariable String activityId) {
-        return ResponseEntity.ok("Activities" + activityId);
+    public ResponseEntity<String> getActivityType() {
+        return ResponseEntity.ok("Activities" );
     }
 
     @PostMapping

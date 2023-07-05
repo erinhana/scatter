@@ -1,5 +1,6 @@
 package com.example.coe.controllers;
 
+import com.example.coe.models.todos.TodoViewModel;
 import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailViewModel;
@@ -70,8 +71,9 @@ public class UserController {
 
     @GetMapping(value = "/{userId}/todos")
     @Operation(summary = "Get All Todos For a User")
-    public ResponseEntity<String> getAllTodosForUser(@PathVariable String userId) {
-        return ResponseEntity.ok("Todos for user id: " + userId);
+    public ResponseEntity<List<TodoViewModel>> getAllTodosForUser(@PathVariable String userId) {
+        var todos= List.of(new TodoViewModel(1, 1, "test todo"));
+        return ResponseEntity.ok(todos);
     }
 }
 

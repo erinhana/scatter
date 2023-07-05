@@ -32,16 +32,16 @@ public class BlockerController {
         return ResponseEntity.ok(new BlockerDetailViewModel(blockerId, 1, "Hoover broken", "Unable to clean room as hoover is broken", LocalDateTime.now(), LocalDateTime.now(), 1));
     }
 
-    @GetMapping(value = "/{types}")
-    @Operation(summary = "Get Blocker Type")
-    public ResponseEntity<String> getBlockerType(@PathVariable String blockerTypeId) {
-        return ResponseEntity.ok("Blockers" + blockerTypeId);
+    @GetMapping(value = "/types")
+    @Operation(summary = "Get Blocker Types")
+    public ResponseEntity<String> getBlockerTypes() {
+        return ResponseEntity.ok("Blockers");
     }
 
     @PostMapping
     @Operation(summary = "Create Blocker")
     public ResponseEntity<BlockerViewModel> createBlocker(@RequestBody @Valid CreateBlockerViewModel model) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new BlockerViewModel(1, 1, model.getTitle(), model.getDescription, 1()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BlockerViewModel(1, 1, model.getTitle(), model.getDescription, 1));
     }
 
     @PutMapping(value = "/{blockerId}")
