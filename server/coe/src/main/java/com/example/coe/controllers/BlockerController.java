@@ -1,9 +1,6 @@
 package com.example.coe.controllers;
 
-import com.example.coe.models.blockers.BlockerDetailViewModel;
-import com.example.coe.models.blockers.BlockerViewModel;
-import com.example.coe.models.blockers.CreateBlockerViewModel;
-import com.example.coe.models.blockers.UpdateBlockerViewModel;
+import com.example.coe.models.blockers.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -34,8 +31,8 @@ public class BlockerController {
 
     @GetMapping(value = "/types")
     @Operation(summary = "Get Blocker Types")
-    public ResponseEntity<String> getBlockerTypes() {
-        return ResponseEntity.ok("Blockers");
+    public ResponseEntity<BlockerTypeViewModel> getBlockerTypes() {
+        return ResponseEntity.ok(new BlockerTypeViewModel());
     }
 
     @PostMapping
