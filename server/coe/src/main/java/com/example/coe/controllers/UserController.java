@@ -5,26 +5,34 @@ import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailViewModel;
 import com.example.coe.models.users.UserViewModel;
+import com.example.coe.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
 @Tag(name = "Users")
+@RequiredArgsConstructor
 public class UserController {
+
+
+    private final UserRepository userRepository;
     @GetMapping
     @Operation(summary = "Get All Users")
     public ResponseEntity<List<UserViewModel>> getAllUsers() {
-        return ResponseEntity.ok(List.of(
-                new UserViewModel(1, "testemail@test.com", "Test", "User"),
-                new UserViewModel(2, "testemail2@test.com", "Test2", "User2"),
-                new UserViewModel(3, "testemail3@test.com", "Test3", "User3")));
+
+
+        var users = userRepository.findAll();
+        return ResponseEntity.ok(users.stream().map(x -> new UserViewModel(x.getId(), x.getEmailAddress(),x.getFirstName(),x.getLastName())).collect(Collectors.toList()));
+
     }
 
     @GetMapping(value = "/{userId}")
