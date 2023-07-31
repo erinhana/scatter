@@ -37,17 +37,16 @@ public class UserController {
 
     @GetMapping(value = "/{userId}")
     @Operation(summary = "Get User")
-    public ResponseEntity<UserDetailViewModel> getUser(@PathVariable int userId) {
-        return ResponseEntity.ok(
-                new UserDetailViewModel(
-                        userId,
-                        "testemail@test.com",
-                        "Test",
-                        "User",
-                        10,
-                        5,
-                        2,
-                        3));
+    public ResponseEntity<UserViewModel> getUser(@PathVariable int userId) {
+
+
+        var user= userRepository.findById(userId);
+        return user.map(value -> ResponseEntity.ok(new UserViewModel(
+                value.getId(),
+                value.getEmailAddress(),
+                value.getFirstName(),
+                value.getLastName())
+        )).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
@@ -74,6 +73,15 @@ public class UserController {
     @DeleteMapping(value = "/{userId}")
     @Operation(summary = "Delete User")
     public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
+
+        var user= userRepository.findById(userId);
+        if (user.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+
+        userRepository.delete(user.get());
+        
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
