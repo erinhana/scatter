@@ -1,6 +1,7 @@
 package com.example.coe.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @SequenceGenerator(name = "users_sequence", sequenceName = "users_id_seq", allocationSize = 1)

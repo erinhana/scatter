@@ -1,5 +1,6 @@
 package com.example.coe.controllers;
 
+import com.example.coe.entities.User;
 import com.example.coe.models.todos.TodoViewModel;
 import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
@@ -51,23 +52,36 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = "Create User")
-    public ResponseEntity<UserDetailViewModel> createUser(@RequestBody @Valid CreateUserViewModel model) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new UserDetailViewModel(
-                1,
-                model.getEmail(),
-                model.getFirstName(),
-                model.getLastName(),
-                0,
-                0,
-                0,
-                0));
+    public ResponseEntity<UserViewModel> createUser(@RequestBody @Valid CreateUserViewModel model) {
+        var newUser = new User(0, model.getEmail(), model.getFirstName(), model.getLastName(), model.getPassword());
+        var createdUser = userRepository.save(newUser);
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UserViewModel(
+                createdUser.getId(),
+                createdUser.getEmailAddress(),
+                createdUser.getFirstName(),
+                createdUser.getLastName()
+                ));
     }
 
 
     @PutMapping(value = "/{userId}")
     @Operation(summary = "Update User")
-    public ResponseEntity<UserViewModel> updateUser(@PathVariable @Valid UpdateUserViewModel model) {
-        return ResponseEntity.ok(new UserViewModel(2, model.getEmail(), model.getFirstName(), model.getLastName()));
+    public ResponseEntity<Void> updateUser(@PathVariable Integer userId, @RequestBody @Valid UpdateUserViewModel model) {
+        var user= userRepository.findById(userId);
+        if (user.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+        user.get().setEmailAddress(model.getEmail());
+        user.get().setFirstName(model.getFirstName());
+        user.get().setLastName(model.getLastName());
+
+        userRepository.save(user.get());
+
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(value = "/{userId}")
@@ -81,7 +95,7 @@ public class UserController {
         }
 
         userRepository.delete(user.get());
-        
+
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
