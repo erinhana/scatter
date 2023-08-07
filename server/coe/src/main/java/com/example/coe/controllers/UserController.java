@@ -7,6 +7,7 @@ import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailViewModel;
 import com.example.coe.models.users.UserViewModel;
 import com.example.coe.repositories.UserRepository;
+import com.example.coe.utils.mapper.Mapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -26,15 +27,21 @@ public class UserController {
 
 
     private final UserRepository userRepository;
+    private final Mapper mapper;
     @GetMapping
     @Operation(summary = "Get All Users")
     public ResponseEntity<List<UserViewModel>> getAllUsers() {
 
 
         var users = userRepository.findAll();
-        return ResponseEntity.ok(users.stream().map(x -> new UserViewModel(x.getId(), x.getEmailAddress(),x.getFirstName(),x.getLastName())).collect(Collectors.toList()));
+
+
+        return ResponseEntity.ok( mapper.map(users, UserViewModel.class));
 
     }
+
+
+
 
     @GetMapping(value = "/{userId}")
     @Operation(summary = "Get User")
