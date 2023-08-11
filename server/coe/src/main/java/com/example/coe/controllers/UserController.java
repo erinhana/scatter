@@ -54,23 +54,19 @@ public class UserController {
 
         return ResponseEntity.ok(mapper.map(user, UserDetailViewModel.class));
 
-        
+
 
     }
 
     @PostMapping
     @Operation(summary = "Create User")
     public ResponseEntity<UserViewModel> createUser(@RequestBody @Valid CreateUserViewModel model) {
-        var newUser = new User(0, model.getEmail(), model.getFirstName(), model.getLastName(), model.getPassword());
+        var newUser = mapper.map(model, User.class);
         var createdUser = userRepository.save(newUser);
 
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(createdUser, UserViewModel.class));
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new UserViewModel(
-                createdUser.getId(),
-                createdUser.getEmailAddress(),
-                createdUser.getFirstName(),
-                createdUser.getLastName()
-                ));
+
     }
 
 
