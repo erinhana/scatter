@@ -78,12 +78,9 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         }
-        user.get().setEmailAddress(model.getEmail());
-        user.get().setFirstName(model.getFirstName());
-        user.get().setLastName(model.getLastName());
 
+        mapper.map(model, user.get());
         userRepository.save(user.get());
-
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
