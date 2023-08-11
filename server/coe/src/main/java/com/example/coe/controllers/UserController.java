@@ -45,16 +45,17 @@ public class UserController {
 
     @GetMapping(value = "/{userId}")
     @Operation(summary = "Get User")
-    public ResponseEntity<UserViewModel> getUser(@PathVariable int userId) {
-
-
+    public ResponseEntity<UserDetailViewModel> getUser(@PathVariable int userId) {
         var user= userRepository.findById(userId);
-        return user.map(value -> ResponseEntity.ok(new UserViewModel(
-                value.getId(),
-                value.getEmailAddress(),
-                value.getFirstName(),
-                value.getLastName())
-        )).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+        if (user.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(mapper.map(user, UserDetailViewModel.class));
+
+        
+
     }
 
     @PostMapping
