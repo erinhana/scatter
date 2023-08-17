@@ -88,8 +88,8 @@ public class UserController {
     @DeleteMapping(value = "/{userId}")
     @Operation(summary = "Delete User")
     public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
-
         var user= userRepository.findById(userId);
+
         if (user.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -100,9 +100,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+
     @GetMapping(value = "/{userId}/todos")
     @Operation(summary = "Get All Todos For a User")
-    public ResponseEntity<List<TodoViewModel>> getAllTodosForUser(@PathVariable String userId) {
+    public ResponseEntity<List<TodoViewModel>> getAllTodosForUser(@PathVariable int userId) {
         var todos= List.of(new TodoViewModel(1, 1, "test todo"));
         return ResponseEntity.ok(todos);
     }
