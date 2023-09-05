@@ -6,6 +6,7 @@ import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailViewModel;
 import com.example.coe.models.users.UserViewModel;
+import com.example.coe.repositories.TodoRepository;
 import com.example.coe.repositories.UserRepository;
 import com.example.coe.utils.mapper.Mapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +28,7 @@ public class UserController {
 
 
     private final UserRepository userRepository;
+    private final TodoRepository todoRepository;
     private final Mapper mapper;
     @GetMapping
     @Operation(summary = "Get All Users")
@@ -104,8 +106,10 @@ public class UserController {
     @GetMapping(value = "/{userId}/todos")
     @Operation(summary = "Get All Todos For a User")
     public ResponseEntity<List<TodoViewModel>> getAllTodosForUser(@PathVariable int userId) {
-        var todos= List.of(new TodoViewModel(1, 1, "test todo"));
-        return ResponseEntity.ok(todos);
+        var todos = todoRepository.findAll();
+
+
+        return ResponseEntity.ok( mapper.map(todos, TodoViewModel.class));
     }
 }
 
