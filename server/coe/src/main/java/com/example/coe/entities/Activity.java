@@ -30,6 +30,8 @@ public class Activity {
     private LocalDateTime createdAt;
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+    @Column(name = "time_spent", nullable = false)
+    private int timeSpent;
 }
 
 
