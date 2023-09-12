@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @ControllerAdvice
 public class CustomRestExceptionHandler {
@@ -24,6 +25,14 @@ public class CustomRestExceptionHandler {
         List<FieldError> fieldErrors = result.getFieldErrors();
         return processFieldErrors(fieldErrors);
     }
+
+    @ResponseStatus(NOT_FOUND)
+    @ResponseBody
+    @ExceptionHandler(NotFoundException.class)
+    public NotFoundError notFoundException(NotFoundException ex) {
+        return new NotFoundError(NOT_FOUND.value(), ex.getMessage());
+    }
+
 
     private Error processFieldErrors(List<org.springframework.validation.FieldError> fieldErrors) {
         Error error = new Error(BAD_REQUEST.value(), "validation error");
@@ -60,4 +69,8 @@ public class CustomRestExceptionHandler {
             return fieldErrors;
         }
     }
+
+    record NotFoundError(int status, String message) {
+    }
+
 }
