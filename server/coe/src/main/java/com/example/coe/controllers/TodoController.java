@@ -1,5 +1,6 @@
 package com.example.coe.controllers;
 
+import com.example.coe.entities.Todo;
 import com.example.coe.exception.NotFoundException;
 import com.example.coe.models.todos.CreateTodoViewModel;
 import com.example.coe.models.todos.TodoDetailViewModel;
@@ -36,8 +37,6 @@ public class TodoController {
     public ResponseEntity<List<TodoViewModel>> getAllTodos(@RequestParam Optional<Integer> userId) {
         var todos = userId.isPresent() ? todoRepository.findByUserId(userId.get()): todoRepository.findAll();
 
-
-
         return ResponseEntity.ok( mapper.map(todos, TodoViewModel.class));
 
     }
@@ -56,20 +55,34 @@ public class TodoController {
     @PostMapping
     @Operation(summary = "Create Todo")
     public ResponseEntity<TodoViewModel> createTodo(@RequestBody @Valid CreateTodoViewModel model) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new TodoViewModel(1, 1, model.getDescription()));
+
+        var newTodo = mapper.map(model, Todo.class);
+        var createdTodo = todoRepository.save(newTodo);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(createdTodo, TodoViewModel.class));
     }
 
 
 
     @PutMapping(value = "/{todoId}")
     @Operation(summary = "Update Todo")
-    public ResponseEntity<TodoViewModel> updateTodo(@PathVariable @Valid UpdateTodoViewModel model) {
-        return ResponseEntity.ok(new TodoViewModel(1, 1, model.getDescription()));
+    public ResponseEntity<TodoViewModel> updateTodo(@PathVariable int todoId, @RequestBody @Valid UpdateTodoViewModel model) {
+
+        var existingTodo = todoRepository.findById(todoId).orElseThrow(() -> new NotFoundException("Todo not found"));
+
+        mapper.map(model,existingTodo);
+        todoRepository.save(existingTodo);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(value = "/{todoId}")
     @Operation(summary = "Delete Todo")
     public ResponseEntity<Void> deleteTodo(@PathVariable int todoId) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        var existingTodo = todoRepository.findById(todoId)
+                .orElseThrow(() -> new NotFoundException("No todo exists with Id:", todoId));
+
+        todoRepository.delete(existingTodo);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
