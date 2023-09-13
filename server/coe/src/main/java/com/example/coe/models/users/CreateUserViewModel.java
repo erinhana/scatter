@@ -15,7 +15,7 @@ import lombok.Setter;
 public class CreateUserViewModel {
     @NotBlank
     @Email
-    private String email;
+    private String emailAddress;
     @NotBlank
     private String firstName;
     @NotBlank

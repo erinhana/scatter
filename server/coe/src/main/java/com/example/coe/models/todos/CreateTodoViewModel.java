@@ -1,8 +1,6 @@
 package com.example.coe.models.todos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +13,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateTodoViewModel {
+    @NotNull
+    @Min(1)
+    private Integer userId;
     @NotBlank
-    private int userId;
     private String description;
     private LocalDateTime deadline;
 }
