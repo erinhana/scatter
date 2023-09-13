@@ -1,6 +1,7 @@
 package com.example.coe.controllers;
 
 import com.example.coe.entities.User;
+import com.example.coe.exception.NotFoundException;
 import com.example.coe.models.todos.TodoViewModel;
 import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
@@ -90,17 +91,14 @@ public class UserController {
     @DeleteMapping(value = "/{userId}")
     @Operation(summary = "Delete User")
     public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
-        var user= userRepository.findById(userId);
+        var existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
 
-        if (user.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        userRepository.delete(existingUser);
 
-        }
-
-        userRepository.delete(user.get());
-
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 
 
     @GetMapping(value = "/{userId}/todos")
