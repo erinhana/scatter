@@ -29,34 +29,34 @@ INSERT INTO users (first_name, last_name, email_address, password)
 values ('Lana', 'Rey', 'lanarey@test.com', 'Password9');
 
 
-INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at, completed_at)
 values (1, 'Collect Prescription', '2023-10-02', now(), now());
 
-INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at, completed_at)
 values (2, 'Walk Dog', '2023-10-02', now(), now());
 
-INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at, completed_at)
 values (3, 'Food Shop', '2023-09-15', now(), now());
 
-INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at, completed_at)
 values (4, 'Study', '2023-09-15', now(), now());
 
-INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at, completed_at)
 values (5, 'Change Sheets', '2023-09-20', now(), now());
 
-INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at, completed_at)
 values (6, 'Put on Wash', '2023-09-12', now(), now());
 
-INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at, completed_at)
 values (7, 'Get Petrol', '2023-09-12', now(), now());
 
-INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at, completed_at)
 values (8, 'Do Homework', '2023-09-12', now(), now());
 
-INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at, completed_at)
 values (9, 'Go For A Run', '2023-09-15', now(), now());
 
-INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at, completed_at)
 values (10, 'Feed Cat', '2023-09-11', now(), now());
 
 
@@ -92,13 +92,13 @@ INSERT INTO activities (todo_id, title, description, created_at, updated_at, tim
 values (10, 'Fed Cat', 'Fed cat in morning', now(), now(), 5);
 
 
-INSERT INTO blocker_types (blocker_types_id, description)
+INSERT INTO blocker_types (description)
 values (1, 'Distraction');
 
-INSERT INTO blocker_types (blocker_types_id, description)
+INSERT INTO blocker_types (description)
 values (2, 'Obstacle');
 
-INSERT INTO blockers (user_id, title, description, created_at, updated_at, blocker_types_id)
+INSERT INTO blockers (user_id, title, description, created_at, updated_at, blocker_type_id)
 values (1, 'No study guide', 'Lost study guide', now(), now(), 1);
 
 INSERT INTO activity_blockers (blocker_id, activity_id, time_spent)
