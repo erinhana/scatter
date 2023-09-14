@@ -49,17 +49,14 @@ public class UserController {
     @GetMapping(value = "/{userId}")
     @Operation(summary = "Get User")
     public ResponseEntity<UserDetailViewModel> getUser(@PathVariable int userId) {
-        var user= userRepository.findById(userId);
-
-        if (user.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        var user= userRepository.findById(userId)
+        .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
 
         return ResponseEntity.ok(mapper.map(user, UserDetailViewModel.class));
 
 
-
     }
+
 
     @PostMapping
     @Operation(summary = "Create User")
@@ -87,6 +84,8 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
+
 
     @DeleteMapping(value = "/{userId}")
     @Operation(summary = "Delete User")
