@@ -31,6 +31,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final TodoRepository todoRepository;
     private final Mapper mapper;
+
     @GetMapping
     @Operation(summary = "Get All Users")
     public ResponseEntity<List<UserViewModel>> getAllUsers() {
@@ -109,4 +110,6 @@ public class UserController {
         return ResponseEntity.ok( mapper.map(todos, TodoViewModel.class));
     }
 }
+
+
 
