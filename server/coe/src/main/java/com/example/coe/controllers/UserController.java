@@ -74,7 +74,7 @@ public class UserController {
     @PutMapping(value = "/{userId}")
     @Operation(summary = "Update User")
     public ResponseEntity<Void> updateUser(@PathVariable Integer userId, @RequestBody @Valid UpdateUserViewModel model) {
-        var user= userRepository.findById(userId);
+        var user = userRepository.findById(userId);
         if (user.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
