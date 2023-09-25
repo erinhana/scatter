@@ -2,14 +2,10 @@ package com.example.coe.controllers;
 
 import com.example.coe.entities.Activity;
 import com.example.coe.exception.NotFoundException;
-import com.example.coe.models.activities.*;
 import com.example.coe.models.activities.ActivityDetailViewModel;
-import com.example.coe.models.activities.ActivityTypeViewModel;
 import com.example.coe.models.activities.ActivityViewModel;
 import com.example.coe.models.activities.CreateActivityViewModel;
 import com.example.coe.models.activities.UpdateActivityViewModel;
-import com.example.coe.models.todos.TodoViewModel;
-import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.repositories.ActivityRepository;
 import com.example.coe.utils.mapper.Mapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,10 +14,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -60,15 +54,6 @@ public class ActivityController {
 
 
 
-    @GetMapping(value = "/types")
-    @Operation(summary = "Get Activity Type")
-    public ResponseEntity<ActivityTypeViewModel> getActivityType() {
-        return ResponseEntity.ok(new ActivityTypeViewModel());
-    }
-
-
-
-
     @PostMapping
     @Operation(summary = "Create Activity")
     public ResponseEntity<ActivityViewModel> createActivity(@RequestBody @Valid CreateActivityViewModel model) {
@@ -86,13 +71,11 @@ public class ActivityController {
     @PutMapping(value = "/{activityId}")
     @Operation(summary = "Update Activity")
     public ResponseEntity<ActivityViewModel> updateActivity(@PathVariable int activityId, @RequestBody @Valid UpdateActivityViewModel model) {
-        var activity = activityRepository.findById(activityId);
-        if (activity.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        var activity = activityRepository.findById(activityId)
+                .orElseThrow(() -> new NotFoundException("No activity exists with this Id", activityId));
 
-        mapper.map(model, activity.get());
-        activityRepository.save(activity.get());
+        mapper.map(model, activity);
+        activityRepository.save(activity);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
