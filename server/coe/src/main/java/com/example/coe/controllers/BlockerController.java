@@ -8,6 +8,7 @@ import com.example.coe.models.blockers.BlockerTypeViewModel;
 import com.example.coe.models.blockers.CreateBlockerViewModel;
 import com.example.coe.models.blockers.UpdateBlockerViewModel;
 import com.example.coe.repositories.BlockerRepository;
+import com.example.coe.repositories.BlockerTypeRepository;
 import com.example.coe.utils.mapper.Mapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,6 +28,7 @@ import java.util.List;
 public class BlockerController {
 
     private final BlockerRepository blockerRepository;
+    private final BlockerTypeRepository blockerTypeRepository;
     private final Mapper mapper;
 
 
@@ -58,9 +60,11 @@ public class BlockerController {
 
     @GetMapping(value = "/types")
     @Operation(summary = "Get Blocker Types")
-    public ResponseEntity<BlockerTypeViewModel> getBlockerTypes() {
-        return ResponseEntity.ok(new BlockerTypeViewModel());
+    public ResponseEntity<List<BlockerTypeViewModel>> getBlockerTypes() {
+        var blockerTypes = blockerTypeRepository.findAll();
+        return ResponseEntity.ok( mapper.map(blockerTypes, BlockerTypeViewModel.class));
     }
+
 
     @PostMapping
     @Operation(summary = "Create Blocker")
