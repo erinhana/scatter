@@ -74,14 +74,11 @@ public class UserController {
     @PutMapping(value = "/{userId}")
     @Operation(summary = "Update User")
     public ResponseEntity<Void> updateUser(@PathVariable Integer userId, @RequestBody @Valid UpdateUserViewModel model) {
-        var user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        var user= userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
 
-        }
-
-        mapper.map(model, user.get());
-        userRepository.save(user.get());
+        mapper.map(model, user);
+        userRepository.save(user);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -104,7 +101,7 @@ public class UserController {
     @GetMapping(value = "/{userId}/todos")
     @Operation(summary = "Get All Todos For a User")
     public ResponseEntity<List<TodoViewModel>> getAllTodosForUser(@PathVariable int userId) {
-        var todos = todoRepository.findAll();
+        var todos = todoRepository.findByUserId(userId);
 
 
         return ResponseEntity.ok( mapper.map(todos, TodoViewModel.class));
