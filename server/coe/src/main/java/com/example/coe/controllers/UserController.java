@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public class UserController {
     private final UserRepository userRepository;
     private final TodoRepository todoRepository;
     private final Mapper mapper;
+
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping
     @Operation(summary = "Get All Users")
@@ -63,11 +66,10 @@ public class UserController {
     @Operation(summary = "Create User")
     public ResponseEntity<UserViewModel> createUser(@RequestBody @Valid CreateUserViewModel model) {
         var newUser = mapper.map(model, User.class);
+        newUser.setPassword(passwordEncoder.encode(model.getPassword()));
         var createdUser = userRepository.save(newUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(createdUser, UserViewModel.class));
-
-
     }
 
 
@@ -78,6 +80,7 @@ public class UserController {
                 .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
 
         mapper.map(model, user);
+        user.setPassword(passwordEncoder.encode(model.getPassword()));
         userRepository.save(user);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
