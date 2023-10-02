@@ -1,32 +1,32 @@
 INSERT INTO users (first_name, last_name, email_address, password)
-values ('Erin', 'Hanafin', 'erin.hanafin@unosquare.com', 'password');
+values ('Erin', 'Hanafin', 'erin.hanafin@unosquare.com', '$2a$10$PKd49c8XioEyktW3avfew.px6DNRjaPlUy1oudoXFaFiXjSf8pa9G');
 
 INSERT INTO users (first_name, last_name, email_address, password)
-values ('Test2', 'User2', 'testuser1000@test.com', 'Password1');
+values ('Test2', 'User2', 'testuser1000@test.com', '$2a$10$emnDH3VjGJECH2a7E10qe.nuynW//BYHuX2YoVU1ty74g32UrV1P6');
 
 INSERT INTO users (first_name, last_name, email_address, password)
-values ('Glenn', 'ONeill', 'glennoneill@test.com', 'Password2');
+values ('Glenn', 'ONeill', 'glennoneill@test.com', '$2a$10$bbt6/sr5XFaXl7wRYXdlM.Buhcgr8zXwUkwA9s2AlLK96o9tP0IXC');
 
 INSERT INTO users (first_name, last_name, email_address, password)
-values ('Amber', 'Dean', 'amberdean@test.com', 'Password3');
+values ('Amber', 'Dean', 'amberdean@test.com', '$2a$10$IR8Rvyi4JWpmgwMLR41cS.MO5/m53NZCGNx/6jif5PjoRLe71k74W');
 
 INSERT INTO users (first_name, last_name, email_address, password)
-values ('Cillian', 'Murphy', 'cillianmurphy@test.com', 'Password4');
+values ('Cillian', 'Murphy', 'cillianmurphy@test.com', '$2a$10$C6orefZXbFMwRlG2tNIjWeOCsauAuKI9bxAb7PzrjFb0ASSlPgJme');
 
 INSERT INTO users (first_name, last_name, email_address, password)
-values ('Justin', 'Bieber', 'justinbieber@test.com', 'Password5');
+values ('Justin', 'Bieber', 'justinbieber@test.com', '$2a$10$FSGcJdV7neXsLrkWjwmrR.3bOEnYOpU6lgKlISphWPrawR9QgCt2O');
 
 INSERT INTO users (first_name, last_name, email_address, password)
-values ('Taylor', 'Swift', 'taylorswift@test.com', 'Password6');
+values ('Taylor', 'Swift', 'taylorswift@test.com', '$2a$10$9jDY9XNftjeSmb3QYRkUk.W0iA77g.8m26dJd0o.K0IUh8Rc2fjhS');
 
 INSERT INTO users (first_name, last_name, email_address, password)
-values ('Van', 'McCann', 'vanmccann@test.com', 'Password7');
+values ('Van', 'McCann', 'vanmccann@test.com', '$2a$10$Y8X9vngH.6sDgULtuF6PwO9//LRX7/j.epOH6DrfD8Go3vtU3rJje');
 
 INSERT INTO users (first_name, last_name, email_address, password)
-values ('Ariana', 'Grande', 'arianagrande@test.com', 'Password8');
+values ('Ariana', 'Grande', 'arianagrande@test.com', '$2a$10$IhmXfBvH3EkgrHu/Q4aM2uM5vA/4D.N6XXHjD7bH8uqkZXTktNwJm');
 
 INSERT INTO users (first_name, last_name, email_address, password)
-values ('Lana', 'Rey', 'lanarey@test.com', 'Password9');
+values ('Lana', 'Rey', 'lanarey@test.com', '$2a$10$/DJNUzEuuxV0KYexHwYF0.cfksSCGCsss.vki6PCsaHwbke51EPNm');
 
 
 INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
