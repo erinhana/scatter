@@ -1,11 +1,9 @@
 package com.example.coe.controllers;
 
 import com.example.coe.entities.Blocker;
+import com.example.coe.entities.BlockerType;
 import com.example.coe.exception.NotFoundException;
-import com.example.coe.models.blockers.BlockerDetailViewModel;
-import com.example.coe.models.blockers.BlockerViewModel;
-import com.example.coe.models.blockers.CreateBlockerViewModel;
-import com.example.coe.models.blockers.UpdateBlockerViewModel;
+import com.example.coe.models.blockers.*;
 import com.example.coe.repositories.BlockerRepository;
 import com.example.coe.repositories.BlockerTypeRepository;
 import com.example.coe.utils.mapper.Mapper;
@@ -41,7 +39,7 @@ public class BlockerControllerTest {
 
 
     @Test
-    void getAllBlockers_whenCalled_retrieveAllBlockers(){
+    void getAllBlockers_whenCalled_retrieveAllBlockers() {
 
         // Arrange: Set up test data
         var blockers = Stream.of(new Blocker()).collect(Collectors.toList());
@@ -92,6 +90,27 @@ public class BlockerControllerTest {
         ThrowableAssert.ThrowingCallable throwingCallable = () -> blockerController.getBlocker(1);
         assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("Blocker not found");
 
+    }
+
+    @Test
+    void getBlockerTypes_whenCalled_retrieveBlockerTypes() {
+
+        // Arrange: Set up test data
+        var blockerTypes = Stream.of(new BlockerType()).collect(Collectors.toList());
+        var blockerTypeViewModels = Stream.of(new BlockerTypeViewModel()).collect(Collectors.toList());
+
+        when(blockerTypeRepository.findAll()).thenReturn(blockerTypes);
+        when(mapper.map(blockerTypes, BlockerTypeViewModel.class)).thenReturn(blockerTypeViewModels);
+
+        // Act: The method we are calling
+        var result = blockerController.getBlockerTypes();
+
+        // Assert: Verify repository was called once and the mapper was called once
+        verify(blockerTypeRepository, times(1)).findAll();
+        verify(mapper, times(1)).map(blockerTypes, BlockerTypeViewModel.class);
+
+        assertThat(result.getBody()).isEqualTo(blockerTypeViewModels);
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
@@ -150,5 +169,34 @@ public class BlockerControllerTest {
         // Act & Assert
         ThrowableAssert.ThrowingCallable throwingCallable = () -> blockerController.updateBlocker(1, updateBlockerViewModel);
         assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("Blocker not found");
+    }
+
+    @Test
+    void deleteBlocker_whenCalledWithValidDetails_returnsNoContent() {
+
+        // Arrange
+        var blocker = new Blocker();
+
+        when(blockerRepository.findById(1)).thenReturn(Optional.of(blocker));
+
+        // Act
+        var result = blockerController.deleteBlocker(1);
+
+        // Assert
+        verify(blockerRepository, times(1)).findById(1);
+        verify(blockerRepository, times(1)).delete(blocker);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+
+    @Test
+    void deleteBlocker_whenCalledWithInValidDetails_throwsNotFoundException() {
+
+        // Arrange
+        when(blockerRepository.findById(any())).thenReturn(Optional.empty());
+
+        // Act & Assert
+        ThrowableAssert.ThrowingCallable throwingCallable = () -> blockerController.deleteBlocker(1);
+        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("No blocker exists with Id");
     }
 }
