@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateBlockerViewModel {
-    public String getDescription;
     @NotBlank
     private int userId;
     private String title;
