@@ -71,6 +71,10 @@ public class BlockerController {
     public ResponseEntity<BlockerViewModel> createBlocker(@RequestBody @Valid CreateBlockerViewModel model) {
 
         var newBlocker = mapper.map(model, Blocker.class);
+        LocalDateTime date = LocalDateTime.now();
+        newBlocker.setCreatedAt(date);
+        newBlocker.setUpdatedAt(date);
+
         var createdBlocker = blockerRepository.save(newBlocker);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(createdBlocker, BlockerViewModel.class));
