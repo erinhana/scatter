@@ -51,4 +51,29 @@ public class BlockerControllerIntegrationTest {
                 .isEqualTo("Test blocker description");
 
     }
+
+    // We want this test to fail correctly
+    @WithMockUser(username = "user1", password = "pwd", roles = "USER")
+    @Test
+    void createBlocker_whenSuppliedWithInValidData_returnsBadRequest() throws Exception {
+
+        var newBlocker = new CreateBlockerViewModel();
+
+
+        var result = mockMvc.perform(post("/blockers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newBlocker)))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        var blockerResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), BlockerViewModel.class);
+
+        assertThat(blockerResponse.getId())
+                .isEqualTo(1);
+        assertThat(blockerResponse.getTitle())
+                .isEqualTo("Test blocker");
+        assertThat(blockerResponse.getDescription())
+                .isEqualTo("Test blocker description");
+
+    }
 }
