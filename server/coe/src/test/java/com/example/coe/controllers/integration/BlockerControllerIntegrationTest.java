@@ -1,8 +1,11 @@
 package com.example.coe.controllers.integration;
 
+import com.example.coe.controllers.integration.responses.ErrorItemResponse;
+import com.example.coe.controllers.integration.responses.ErrorResponse;
 import com.example.coe.models.blockers.BlockerViewModel;
 import com.example.coe.models.blockers.CreateBlockerViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.javacrumbs.jsonunit.core.Option;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,11 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
+
+import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -66,14 +73,20 @@ public class BlockerControllerIntegrationTest {
                 .andExpect(status().isBadRequest())
                 .andReturn();
 
-        var blockerResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), BlockerViewModel.class);
+        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
 
-        assertThat(blockerResponse.getId())
-                .isEqualTo(1);
-        assertThat(blockerResponse.getTitle())
-                .isEqualTo("Test blocker");
-        assertThat(blockerResponse.getDescription())
-                .isEqualTo("Test blocker description");
+        ErrorItemResponse[] expectedFieldErrors = new ErrorItemResponse[]{
+                new ErrorItemResponse("title", "must not be null"),
+                new ErrorItemResponse("blockerTypeId", "must be greater than 0"),
+                new ErrorItemResponse("userId", "must be greater than 0"),
+                new ErrorItemResponse("description", "must not be null")
+        };
+
+        assertThat(errorResponse.getStatus()).isEqualTo(BAD_REQUEST.value());
+        assertThat(errorResponse.getMessage()).isEqualTo("validation error");
+        assertThatJson(errorResponse.getFieldErrors())
+               .when(Option.IGNORING_ARRAY_ORDER)
+               .isEqualTo(expectedFieldErrors);
 
     }
 }
