@@ -6,7 +6,6 @@ import com.example.coe.models.todos.CreateTodoViewModel;
 import com.example.coe.models.todos.TodoDetailViewModel;
 import com.example.coe.models.todos.TodoViewModel;
 import com.example.coe.models.todos.UpdateTodoViewModel;
-import com.example.coe.models.users.UserViewModel;
 import com.example.coe.repositories.TodoRepository;
 import com.example.coe.repositories.UserRepository;
 import com.example.coe.utils.mapper.Mapper;
@@ -16,10 +15,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,12 +29,13 @@ public class TodoController {
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
     private final Mapper mapper;
+
     @GetMapping
     @Operation(summary = "Get All Todos")
     public ResponseEntity<List<TodoViewModel>> getAllTodos(@RequestParam Optional<Integer> userId) {
-        var todos = userId.isPresent() ? todoRepository.findByUserId(userId.get()): todoRepository.findAll();
+        var todos = userId.isPresent() ? todoRepository.findByUserId(userId.get()) : todoRepository.findAll();
 
-        return ResponseEntity.ok( mapper.map(todos, TodoViewModel.class));
+        return ResponseEntity.ok(mapper.map(todos, TodoViewModel.class));
 
     }
 
@@ -48,7 +46,7 @@ public class TodoController {
         var todo = todoRepository.findById(todoId).orElseThrow(() -> new NotFoundException("Todo not found"));
 
 
-        return ResponseEntity.ok( mapper.map(todo, TodoDetailViewModel.class));
+        return ResponseEntity.ok(mapper.map(todo, TodoDetailViewModel.class));
 
     }
 
@@ -63,14 +61,13 @@ public class TodoController {
     }
 
 
-
     @PutMapping(value = "/{todoId}")
     @Operation(summary = "Update Todo")
     public ResponseEntity<TodoViewModel> updateTodo(@PathVariable int todoId, @RequestBody @Valid UpdateTodoViewModel model) {
 
         var existingTodo = todoRepository.findById(todoId).orElseThrow(() -> new NotFoundException("Todo not found"));
 
-        mapper.map(model,existingTodo);
+        mapper.map(model, existingTodo);
         todoRepository.save(existingTodo);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

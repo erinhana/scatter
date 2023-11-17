@@ -17,9 +17,8 @@ import java.time.LocalDateTime;
 
 public class Blocker {
     @Id
-    @SequenceGenerator(name = "blockers_sequence", sequenceName = "blockers_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "blockers_sequence")
-    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     private int id;
     @Column(name = "title", nullable = false)
     private String title;
@@ -29,9 +28,15 @@ public class Blocker {
     private LocalDateTime createdAt;
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", updatable = false, nullable = false)
+    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "blocker_type_id", updatable = false, nullable = false)
+    private BlockerType blockerType;
+
 
 }
-
 
 
 //    user_id INTEGER NOT NULL,

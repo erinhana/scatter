@@ -38,7 +38,6 @@ public class ActivityController {
     }
 
 
-
     @GetMapping(value = "/{activityId}")
     @Operation(summary = "Get Activity")
     public ResponseEntity<ActivityDetailViewModel> getActivity(@PathVariable int activityId) {
@@ -52,20 +51,15 @@ public class ActivityController {
     }
 
 
-
-
     @PostMapping
     @Operation(summary = "Create Activity")
     public ResponseEntity<ActivityViewModel> createActivity(@RequestBody @Valid CreateActivityViewModel model) {
         var newActivity = mapper.map(model, Activity.class);
         var createdActivity = activityRepository.save(newActivity);
 
-       return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(createdActivity, ActivityViewModel.class));
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(createdActivity, ActivityViewModel.class));
 
     }
-
-
-
 
 
     @PutMapping(value = "/{activityId}")
@@ -79,10 +73,6 @@ public class ActivityController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
-
-
 
 
     @DeleteMapping(value = "/{activityId}")

@@ -1,7 +1,7 @@
 package com.example.coe.security;
 
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -88,8 +88,7 @@ public class JwtTokenUtil implements Serializable {
                 .parseClaimsJws(refreshToken).getBody();
         if ((claims.get("exp", Date.class).toInstant().compareTo(Instant.now()) > 0)) {
             return claims.get("sub", String.class);
-        }
-        else {
+        } else {
             throw new Exception(("Invalid Refresh token"));
         }
     }

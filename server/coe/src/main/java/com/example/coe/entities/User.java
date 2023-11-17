@@ -14,9 +14,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class User {
     @Id
-    @SequenceGenerator(name = "users_sequence", sequenceName = "users_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_sequence")
-    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     private int id;
     @Column(name = "email_address", nullable = false)
     private String emailAddress;

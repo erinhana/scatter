@@ -2,6 +2,7 @@ package com.example.coe.controllers.integration;
 
 import com.example.coe.controllers.integration.responses.ErrorItemResponse;
 import com.example.coe.controllers.integration.responses.ErrorResponse;
+import com.example.coe.models.blockers.BlockerDetailViewModel;
 import com.example.coe.models.blockers.BlockerViewModel;
 import com.example.coe.models.blockers.CreateBlockerViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,20 +14,23 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.Optional;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
+@SqlGroup(@Sql(value = "classpath:init/create-blocker-data.sql", executionPhase = BEFORE_TEST_METHOD))
 public class BlockerControllerIntegrationTest {
 
     @Autowired
@@ -36,7 +40,45 @@ public class BlockerControllerIntegrationTest {
     private ObjectMapper objectMapper;
 
 
-    @WithMockUser(username = "user1", password = "pwd", roles = "USER")
+    @Test
+    void getBlocker_whenCalledWithValidId_returnsIsOk() throws Exception {
+
+        var result = mockMvc.perform(get("/blockers/1"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // Need to return a response here
+
+        var blockerDetailResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), BlockerDetailViewModel.class);
+
+        assertThat(blockerDetailResponse.getId())
+                .isEqualTo(1);
+        assertThat(blockerDetailResponse.getTitle())
+                .isEqualTo("No study guide");
+        assertThat(blockerDetailResponse.getDescription())
+                .isEqualTo("Lost study guide");
+        assertThat(blockerDetailResponse.getCreatedAt())
+                .isNotNull();
+        assertThat(blockerDetailResponse.getUpdatedAt())
+                .isNotNull();
+
+    }
+
+    @Test
+    void getBlocker_whenCalledWithInvalidId_throwsNotFoundException() throws Exception {
+
+//        var result = mockMvc.perform(get("/blockers/5")
+//                .andExpect(status().isNotFound())
+//                .anReturn();
+//
+//        // Need to return a response here
+//
+//        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
+
+
+    }
+
+
     @Test
     void createBlocker_whenSuppliedWithValidData_returnsCreatedResponse() throws Exception {
 
@@ -85,8 +127,8 @@ public class BlockerControllerIntegrationTest {
         assertThat(errorResponse.getStatus()).isEqualTo(BAD_REQUEST.value());
         assertThat(errorResponse.getMessage()).isEqualTo("validation error");
         assertThatJson(errorResponse.getFieldErrors())
-               .when(Option.IGNORING_ARRAY_ORDER)
-               .isEqualTo(expectedFieldErrors);
+                .when(Option.IGNORING_ARRAY_ORDER)
+                .isEqualTo(expectedFieldErrors);
 
     }
 }

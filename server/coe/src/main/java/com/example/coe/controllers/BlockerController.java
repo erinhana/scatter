@@ -2,11 +2,7 @@ package com.example.coe.controllers;
 
 import com.example.coe.entities.Blocker;
 import com.example.coe.exception.NotFoundException;
-import com.example.coe.models.blockers.BlockerViewModel;
-import com.example.coe.models.blockers.BlockerDetailViewModel;
-import com.example.coe.models.blockers.BlockerTypeViewModel;
-import com.example.coe.models.blockers.CreateBlockerViewModel;
-import com.example.coe.models.blockers.UpdateBlockerViewModel;
+import com.example.coe.models.blockers.*;
 import com.example.coe.repositories.BlockerRepository;
 import com.example.coe.repositories.BlockerTypeRepository;
 import com.example.coe.utils.mapper.Mapper;
@@ -40,9 +36,8 @@ public class BlockerController {
         var blockers = blockerRepository.findAll();
 
 
-        return ResponseEntity.ok( mapper.map(blockers, BlockerViewModel.class));
+        return ResponseEntity.ok(mapper.map(blockers, BlockerViewModel.class));
     }
-
 
 
     @GetMapping(value = "/{blockerId}")
@@ -51,18 +46,17 @@ public class BlockerController {
         var blocker = blockerRepository.findById(blockerId).orElseThrow(() -> new NotFoundException("Blocker not found"));
 
 
-        return ResponseEntity.ok( mapper.map(blocker, BlockerDetailViewModel.class));
+        return ResponseEntity.ok(mapper.map(blocker, BlockerDetailViewModel.class));
 
 
     }
-
 
 
     @GetMapping(value = "/types")
     @Operation(summary = "Get Blocker Types")
     public ResponseEntity<List<BlockerTypeViewModel>> getBlockerTypes() {
         var blockerTypes = blockerTypeRepository.findAll();
-        return ResponseEntity.ok( mapper.map(blockerTypes, BlockerTypeViewModel.class));
+        return ResponseEntity.ok(mapper.map(blockerTypes, BlockerTypeViewModel.class));
     }
 
 
@@ -81,7 +75,6 @@ public class BlockerController {
     }
 
 
-
     @PutMapping(value = "/{blockerId}")
     @Operation(summary = "Update Blocker")
     public ResponseEntity<BlockerViewModel> updateBlocker(@PathVariable int blockerId, @RequestBody @Valid UpdateBlockerViewModel model) {
@@ -95,16 +88,15 @@ public class BlockerController {
     }
 
 
-
     @DeleteMapping(value = "/{blockerId}")
     @Operation(summary = "Delete Blocker")
     public ResponseEntity<Void> deleteBlocker(@PathVariable int blockerId) {
-       var existingBlocker = blockerRepository.findById(blockerId)
-               .orElseThrow(() -> new NotFoundException("No blocker exists with Id", blockerId));
+        var existingBlocker = blockerRepository.findById(blockerId)
+                .orElseThrow(() -> new NotFoundException("No blocker exists with Id", blockerId));
 
-               blockerRepository.delete(existingBlocker);
+        blockerRepository.delete(existingBlocker);
 
-               return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

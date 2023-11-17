@@ -31,8 +31,7 @@ public class AuthenticationController {
 
         try {
             authenticationManager.authenticate(authenticationToken);
-        }
-        catch (BadCredentialsException ex) {
+        } catch (BadCredentialsException ex) {
 
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }

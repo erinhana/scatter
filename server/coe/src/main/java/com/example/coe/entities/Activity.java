@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "activities")
@@ -33,7 +32,6 @@ public class Activity {
     @Column(name = "time_spent", nullable = false)
     private int timeSpent;
 }
-
 
 
 //    todo_id INTEGER NOT NULL,

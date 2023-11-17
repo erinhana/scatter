@@ -12,9 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BlockerType {
     @Id
-    @SequenceGenerator(name = "blocker_types_sequence", sequenceName = "blocker_types_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "blocker_types_sequence")
-    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     private int id;
 
     @Column(name = "description", nullable = false)

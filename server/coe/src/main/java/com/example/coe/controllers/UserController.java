@@ -20,7 +20,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -43,18 +42,16 @@ public class UserController {
         var users = userRepository.findAll();
 
 
-        return ResponseEntity.ok( mapper.map(users, UserViewModel.class));
+        return ResponseEntity.ok(mapper.map(users, UserViewModel.class));
 
     }
-
-
 
 
     @GetMapping(value = "/{userId}")
     @Operation(summary = "Get User")
     public ResponseEntity<UserDetailViewModel> getUser(@PathVariable int userId) {
-        var user= userRepository.findById(userId)
-        .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
+        var user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
 
         return ResponseEntity.ok(mapper.map(user, UserDetailViewModel.class));
 
@@ -76,7 +73,7 @@ public class UserController {
     @PutMapping(value = "/{userId}")
     @Operation(summary = "Update User")
     public ResponseEntity<Void> updateUser(@PathVariable Integer userId, @RequestBody @Valid UpdateUserViewModel model) {
-        var user= userRepository.findById(userId)
+        var user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
 
         mapper.map(model, user);
@@ -85,7 +82,6 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 
 
     @DeleteMapping(value = "/{userId}")
@@ -100,14 +96,13 @@ public class UserController {
     }
 
 
-
     @GetMapping(value = "/{userId}/todos")
     @Operation(summary = "Get All Todos For a User")
     public ResponseEntity<List<TodoViewModel>> getAllTodosForUser(@PathVariable int userId) {
         var todos = todoRepository.findByUserId(userId);
 
 
-        return ResponseEntity.ok( mapper.map(todos, TodoViewModel.class));
+        return ResponseEntity.ok(mapper.map(todos, TodoViewModel.class));
     }
 }
 
