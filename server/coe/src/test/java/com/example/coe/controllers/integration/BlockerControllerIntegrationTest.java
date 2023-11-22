@@ -22,9 +22,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -131,4 +131,32 @@ public class BlockerControllerIntegrationTest {
                 .isEqualTo(expectedFieldErrors);
 
     }
+
+    @Test
+    void deleteBlocker_whenCalledWithValidId_returnsIsNoContent() throws Exception {
+        var result = mockMvc.perform(delete("/blockers/1"))
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        // Need to return a response here
+
+        assertThat(result.getResponse().getContentAsByteArray()).isEmpty();
+    }
+
+    @Test
+    void deleteBlocker_whenCalledWithInvalidId_throwsNotFoundException() throws Exception {
+        var result = mockMvc.perform(delete("/blockers/99"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
+        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
+
+        assertThat(errorResponse.getStatus()).isEqualTo(NOT_FOUND.value());
+        assertThat(errorResponse.getMessage()).isEqualTo("No blocker exists with Id");
+
+
+    }
+
+
+
 }
