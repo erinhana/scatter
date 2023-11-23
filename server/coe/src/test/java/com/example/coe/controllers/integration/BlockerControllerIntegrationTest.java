@@ -67,16 +67,18 @@ public class BlockerControllerIntegrationTest {
     @Test
     void getBlocker_whenCalledWithInvalidId_throwsNotFoundException() throws Exception {
 
-//        var result = mockMvc.perform(get("/blockers/5")
-//                .andExpect(status().isNotFound())
-//                .anReturn();
-//
-//        // Need to return a response here
-//
-//        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
+        var result = mockMvc.perform(get("/blockers/5"))
+                .andExpect(status().isNotFound())
+                .andReturn();
 
+        // Need to return a response here
 
+        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
+
+        assertThat(errorResponse.getStatus()).isEqualTo(NOT_FOUND.value());
+        assertThat(errorResponse.getMessage()).isEqualTo("Blocker not found");
     }
+
 
 
     @Test
