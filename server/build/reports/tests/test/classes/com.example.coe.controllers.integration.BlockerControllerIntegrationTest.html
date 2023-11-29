@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - BlockerControllerIntegrationTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>BlockerControllerIntegrationTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.example.coe.controllers.integration.html">com.example.coe.controllers.integration</a> &gt; BlockerControllerIntegrationTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">1.158s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">deleteBlocker_whenCalledWithValidId_returnsIsNoContent()</td>
+<td class="success">1.158s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>16:42:43.948 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.coe.controllers.integration.BlockerControllerIntegrationTest]: BlockerControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:42:44.291 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.coe.ScatterApplication for test class com.example.coe.controllers.integration.BlockerControllerIntegrationTest
+16:42:44.470 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+16:42:44.473 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+16:42:44.774 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.UnixSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+16:42:45.219 [Test worker] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Unix socket (unix:///var/run/docker.sock)
+16:42:45.233 [Test worker] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+16:42:45.286 [Test worker] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 20.10.8
+  API Version: 1.41
+  Operating System: Docker Desktop
+  Total Memory: 1988 MB
+16:42:45.287 [Test worker] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+16:42:45.288 [Test worker] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+16:42:45.289 [Test worker] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+16:42:45.336 [Test worker] INFO tc.testcontainers/ryuk:0.5.1 -- Creating container for image: testcontainers/ryuk:0.5.1
+16:42:45.486 [Test worker] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+16:42:45.737 [Test worker] INFO tc.testcontainers/ryuk:0.5.1 -- Container testcontainers/ryuk:0.5.1 is starting: 668eb99b51bf36fa3be604acc80ea32c852a575b98601a55033f4eed0241d7f7
+16:42:46.365 [Test worker] INFO tc.testcontainers/ryuk:0.5.1 -- Container testcontainers/ryuk:0.5.1 started in PT1.029686S
+16:42:46.383 [Test worker] INFO org.testcontainers.containers.ComposeDelegate -- Preemptively checking local images for 'flyway/flyway:latest', referenced via a compose file or transitive Dockerfile. If not available, it will be pulled.
+16:42:46.383 [Test worker] INFO org.testcontainers.containers.ComposeDelegate -- Preemptively checking local images for 'postgres:latest', referenced via a compose file or transitive Dockerfile. If not available, it will be pulled.
+16:42:46.397 [Test worker] INFO tc.docker/compose:1.29.2 -- Creating container for image: docker/compose:1.29.2
+16:42:48.447 [Test worker] INFO tc.docker/compose:1.29.2 -- Container docker/compose:1.29.2 is starting: 974d5a2eaa3e0a7e03b5290a9e569938af844f3e9c2d381f67a41fdf3d678188
+16:42:48.690 [Test worker] WARN tc.docker/compose:1.29.2 -- The architecture 'amd64' for image 'docker/compose:1.29.2' (ID sha256:32d8a4638cd83922fdd94cadf4f1850b595d29757488c73adf05f4b99ebd1318) does not match the Docker server architecture 'arm64'. This will cause the container to execute much more slowly due to emulation and may lead to timeout failures.
+16:42:53.579 [Test worker] INFO tc.docker/compose:1.29.2 -- Container docker/compose:1.29.2 started in PT7.181785S
+16:42:53.589 [Test worker] INFO tc.docker/compose:1.29.2 -- Docker Compose container is running for command: up -d
+16:42:53.598 [Test worker] INFO tc.docker/compose:1.29.2 -- Docker Compose has finished running
+16:42:53.598 [docker-java-stream-1984215864] INFO tc.docker/compose:1.29.2 -- STDERR: Creating network &quot;7fexfwfu6w44_default&quot; with the default driver
+16:42:53.599 [docker-java-stream-1984215864] INFO tc.docker/compose:1.29.2 -- STDERR: Creating volume &quot;7fexfwfu6w44_db&quot; with default driver
+16:42:53.599 [docker-java-stream-1984215864] INFO tc.docker/compose:1.29.2 -- STDERR: Creating 7fexfwfu6w44_db_1 ... 
+16:42:53.599 [docker-java-stream-1984215864] INFO tc.docker/compose:1.29.2 -- STDERR: Creating 7fexfwfu6w44_db_1 ... done
+16:42:53.599 [docker-java-stream-1984215864] INFO tc.docker/compose:1.29.2 -- STDERR: Creating 7fexfwfu6w44_flyway_1 ... 
+16:42:53.599 [docker-java-stream-1984215864] INFO tc.docker/compose:1.29.2 -- STDERR: Creating 7fexfwfu6w44_flyway_1 ... done
+16:42:53.606 [Test worker] INFO tc.alpine/socat:1.7.4.3-r0 -- Creating container for image: alpine/socat:1.7.4.3-r0
+16:42:53.734 [Test worker] INFO tc.alpine/socat:1.7.4.3-r0 -- Container alpine/socat:1.7.4.3-r0 is starting: 7ebf3779b64f7fcd0fad0de9ab95d4cbaceeba9cac7f098d8ddaaf4d0b236a64
+16:42:54.130 [Test worker] INFO tc.alpine/socat:1.7.4.3-r0 -- Container alpine/socat:1.7.4.3-r0 started in PT0.523453S
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.0)
+
+2023-11-29T16:42:56.328Z  INFO 71936 --- [    Test worker] e.c.c.i.BlockerControllerIntegrationTest : Starting BlockerControllerIntegrationTest using Java 17.0.5 with PID 71936 (started by erinhanafin in /Users/erinhanafin/Desktop/COE Project/scatter/server)
+2023-11-29T16:42:56.332Z  INFO 71936 --- [    Test worker] e.c.c.i.BlockerControllerIntegrationTest : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-11-29T16:42:57.758Z  INFO 71936 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-29T16:42:57.881Z  INFO 71936 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 113 ms. Found 5 JPA repository interfaces.
+2023-11-29T16:42:58.988Z  INFO 71936 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-29T16:42:59.274Z  INFO 71936 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@47b961e2
+2023-11-29T16:42:59.278Z  INFO 71936 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-29T16:42:59.348Z  INFO 71936 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-29T16:42:59.399Z  INFO 71936 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.2.Final
+2023-11-29T16:42:59.404Z  INFO 71936 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-11-29T16:42:59.552Z  INFO 71936 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-11-29T16:42:59.757Z  INFO 71936 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-11-29T16:42:59.822Z  INFO 71936 --- [    Test worker] org.hibernate.orm.dialect                : HHH035001: Using dialect: org.hibernate.dialect.PostgreSQLDialect, version: org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$DialectResolutionInfoImpl@63ad5fe7
+2023-11-29T16:43:00.070Z  INFO 71936 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-11-29T16:43:00.955Z  INFO 71936 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-29T16:43:00.961Z  INFO 71936 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29T16:43:02.208Z  WARN 71936 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-29T16:43:02.719Z  INFO 71936 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@f3cc2e0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@70ba01be, org.springframework.security.web.context.SecurityContextHolderFilter@18d76c14, org.springframework.security.web.header.HeaderWriterFilter@10fa270e, org.springframework.security.web.authentication.logout.LogoutFilter@1da2219c, com.example.coe.security.JwtRequestFilter@326489c4, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7011eee0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2474331d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2b3fd4d2, org.springframework.security.web.session.SessionManagementFilter@bc85538, org.springframework.security.web.access.ExceptionTranslationFilter@2fb171f5, org.springframework.security.web.access.intercept.AuthorizationFilter@76a13b12]
+2023-11-29T16:43:03.238Z  INFO 71936 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-11-29T16:43:03.239Z  INFO 71936 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-11-29T16:43:03.244Z  INFO 71936 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 5 ms
+2023-11-29T16:43:03.295Z  INFO 71936 --- [    Test worker] e.c.c.i.BlockerControllerIntegrationTest : Started BlockerControllerIntegrationTest in 7.39 seconds (process running for 20.678)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.6.1</a> at 29 Nov 2023, 16:43:04</p>
+</div>
+</div>
+</body>
+</html>
