@@ -29,7 +29,6 @@ public class BlockerController {
     private final BlockerTypeRepository blockerTypeRepository;
     private final Mapper mapper;
     private final UserRepository userRepository;
-    private final AppUser.CurrentAppUser currentAppUser;
 
 
     @GetMapping
@@ -69,11 +68,14 @@ public class BlockerController {
     public ResponseEntity<BlockerViewModel> createBlocker(@RequestBody @Valid CreateBlockerViewModel model) {
 
         var newBlocker = mapper.map(model, Blocker.class);
-        var user = userRepository.getReferenceById(currentAppUser.getId());
+        var user = userRepository.getReferenceById(model.getUserId());
+        var blockerType = blockerTypeRepository.getReferenceById(model.getBlockerTypeId());
+
         LocalDateTime date = LocalDateTime.now();
         newBlocker.setCreatedAt(date);
         newBlocker.setUpdatedAt(date);
         newBlocker.setUser(user);
+        newBlocker.setBlockerType(blockerType);
 
         var createdBlocker = blockerRepository.save(newBlocker);
 

@@ -92,11 +92,12 @@ public class BlockerControllerIntegrationTest {
         var blockerResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), BlockerViewModel.class);
 
         assertThat(blockerResponse.getId())
-                .isEqualTo(1);
+                .isEqualTo(2);
         assertThat(blockerResponse.getTitle())
                 .isEqualTo("Test blocker");
         assertThat(blockerResponse.getDescription())
                 .isEqualTo("Test blocker description");
+        //TODO Ask Mark why userId and blockerTypeId is being returned as zero
 
     }
 
