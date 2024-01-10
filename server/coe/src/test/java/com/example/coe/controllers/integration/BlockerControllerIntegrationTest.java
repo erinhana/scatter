@@ -79,7 +79,7 @@ public class BlockerControllerIntegrationTest {
 
 
     @Test
-    void getBlockerType_whenCalledWithValidId_returnsIsOk() throws Exception {
+    void getBlockerType_whenCalled_returnsIsOk() throws Exception {
 
         var result = mockMvc.perform(get("/blockers/types"))
                 .andExpect(status().isOk())
@@ -95,23 +95,6 @@ public class BlockerControllerIntegrationTest {
 
 
     }
-
-    @Test
-    void getBlockerType_whenCalledWithInvalidId_throwsNotFoundException() throws Exception {
-
-        var result = mockMvc.perform(get("/blockers/types/97"))
-                .andExpect(status().isNotFound())
-                .andReturn();
-
-        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
-
-        assertThat(errorResponse.getStatus()).isEqualTo(NOT_FOUND.value());
-        assertThat(errorResponse.getMessage()).isEqualTo("Blocker type not found");
-
-
-    }
-
-    //TODO Still need to add tests for Get Blocker Types
 
     @Test
     void createBlocker_whenSuppliedWithValidData_returnsCreatedResponse() throws Exception {
