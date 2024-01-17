@@ -1,4 +1,4 @@
-package com.example.coe.controllers.integration.responses;
+package com.example.coe.integration.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

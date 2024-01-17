@@ -1,19 +1,17 @@
-package com.example.coe.controllers.integration;
+package com.example.coe.integration;
 
-import com.example.coe.controllers.integration.extensions.DockerComposeExtension;
-import com.example.coe.controllers.integration.responses.ErrorItemResponse;
-import com.example.coe.controllers.integration.responses.ErrorResponse;
+import com.example.coe.integration.extensions.DockerComposeExtension;
+import com.example.coe.integration.responses.ErrorItemResponse;
+import com.example.coe.integration.responses.ErrorResponse;
 import com.example.coe.models.blockers.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.javacrumbs.jsonunit.core.Option;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -77,6 +75,32 @@ public class BlockerControllerIntegrationTest {
         assertThat(errorResponse.getMessage()).isEqualTo("Blocker not found");
     }
 
+    @Test
+    void getAllBlockers_whenCalled_returnsIsOk() throws Exception {
+
+        var result = mockMvc.perform(get("/blockers"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        var blockerResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(),
+                new TypeReference<List<BlockerViewModel>>() {});
+
+        assertThat(blockerResponse)
+                .isNotEmpty();
+        assertThat(blockerResponse.get(0).getId())
+                .isEqualTo(1);
+        assertThat(blockerResponse.get(0).getUserId())
+                .isEqualTo(1);
+        assertThat(blockerResponse.get(0).getTitle())
+                .isEqualTo("No study guide");
+        assertThat(blockerResponse.get(0).getDescription())
+                .isEqualTo("Lost study guide");
+        assertThat(blockerResponse.get(0).getBlockerTypeId())
+                .isEqualTo(1);
+
+
+
+    }
 
     @Test
     void getBlockerType_whenCalled_returnsIsOk() throws Exception {
