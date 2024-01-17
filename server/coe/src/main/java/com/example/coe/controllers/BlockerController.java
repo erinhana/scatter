@@ -6,7 +6,6 @@ import com.example.coe.models.blockers.*;
 import com.example.coe.repositories.BlockerRepository;
 import com.example.coe.repositories.BlockerTypeRepository;
 import com.example.coe.repositories.UserRepository;
-import com.example.coe.security.AppUser;
 import com.example.coe.utils.mapper.Mapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -83,7 +83,8 @@ public class BlockerControllerIntegrationTest {
                 .andReturn();
 
         var blockerResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(),
-                new TypeReference<List<BlockerViewModel>>() {});
+                new TypeReference<List<BlockerViewModel>>() {
+                });
 
         assertThat(blockerResponse)
                 .isNotEmpty();
@@ -99,7 +100,6 @@ public class BlockerControllerIntegrationTest {
                 .isEqualTo(1);
 
 
-
     }
 
     @Test
@@ -110,7 +110,8 @@ public class BlockerControllerIntegrationTest {
                 .andReturn();
 
         var blockerTypeResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(),
-                new TypeReference<List<BlockerTypeViewModel>>() {});
+                new TypeReference<List<BlockerTypeViewModel>>() {
+                });
 
         assertThat(blockerTypeResponse.get(0).getId())
                 .isEqualTo(1);
@@ -190,7 +191,6 @@ public class BlockerControllerIntegrationTest {
     }
 
 
-
     @Test
     void updateBlocker_whenSuppliedWithValidDataButNoRecord_returnsNotFound() throws Exception {
         UpdateBlockerViewModel updateBlocker = new UpdateBlockerViewModel(
@@ -210,8 +210,8 @@ public class BlockerControllerIntegrationTest {
         UpdateBlockerViewModel updateBlocker = new UpdateBlockerViewModel();
 
         var result = mockMvc.perform(put("/blockers/98")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(updateBlocker)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateBlocker)))
                 .andExpect(status().isBadRequest())
                 .andReturn();
 

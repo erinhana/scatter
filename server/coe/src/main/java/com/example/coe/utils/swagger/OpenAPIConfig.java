@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenAPIConfig {
     @Bean
-    public OpenAPI myOpenAPI(){
+    public OpenAPI myOpenAPI() {
         var securitySchemeName = "bearerAuth";
         Info info = new Info()
                 .title("Scatter API")
