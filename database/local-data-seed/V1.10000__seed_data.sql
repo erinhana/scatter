@@ -99,10 +99,12 @@ INSERT INTO blocker_types (description)
 values ('Obstacle');
 
 INSERT INTO blockers (user_id, title, description, created_at, updated_at, blocker_type_id)
-values (1, 'No study guide', 'Lost study guide', now(), now(), 1);
+values (1, 'No study guide', 'Lost study guide', now(), now(), 1), (1, 'Washing machine broken', 'No handy person available', now(), now(), 2);
+
+
 
 INSERT INTO activity_blockers (blocker_id, activity_id, time_spent)
-values (1, 1, 15);
+values (1, 1, 15), (2, 5, 10);
 
 
 

@@ -15,7 +15,7 @@ services:
   flyway:
     image: flyway/flyway
     command: -url=jdbc:postgresql://db/scatter -schemas=public -user=admin
-      -password=password -connectRetries=5 migrate
+      -password=password -connectRetries=5 -outOfOrder=true migrate
     volumes:
       - ./database:/flyway/sql
     depends_on:

@@ -5,6 +5,7 @@ import com.example.coe.exception.NotFoundException;
 import com.example.coe.models.blockers.*;
 import com.example.coe.repositories.BlockerRepository;
 import com.example.coe.repositories.BlockerTypeRepository;
+import com.example.coe.repositories.UserRepository;
 import com.example.coe.utils.mapper.Mapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +27,7 @@ public class BlockerController {
     private final BlockerRepository blockerRepository;
     private final BlockerTypeRepository blockerTypeRepository;
     private final Mapper mapper;
+    private final UserRepository userRepository;
 
 
     @GetMapping
@@ -65,9 +67,14 @@ public class BlockerController {
     public ResponseEntity<BlockerViewModel> createBlocker(@RequestBody @Valid CreateBlockerViewModel model) {
 
         var newBlocker = mapper.map(model, Blocker.class);
+        var user = userRepository.getReferenceById(model.getUserId());
+        var blockerType = blockerTypeRepository.getReferenceById(model.getBlockerTypeId());
+
         LocalDateTime date = LocalDateTime.now();
         newBlocker.setCreatedAt(date);
         newBlocker.setUpdatedAt(date);
+        newBlocker.setUser(user);
+        newBlocker.setBlockerType(blockerType);
 
         var createdBlocker = blockerRepository.save(newBlocker);
 

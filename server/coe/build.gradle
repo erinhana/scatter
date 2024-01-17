@@ -32,11 +32,11 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
     testImplementation("org.assertj:assertj-core:3.24.2")
-    testImplementation 'com.h2database:h2:2.1.210'
     testImplementation 'org.springframework.security:spring-security-test:6.1.5'
     testAnnotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
     testImplementation 'net.javacrumbs.json-unit:json-unit-assertj:3.2.2'
+    testImplementation "org.testcontainers:testcontainers:1.19.3"
 }
 
 tasks.named('test') {
