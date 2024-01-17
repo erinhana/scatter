@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BlockerRepository extends JpaRepository<Blocker, Integer> {
-//    @EntityGraph(attributePaths = {"user", "blockerType"})
-//    Blocker save(Blocker blocker);
 }
