@@ -1,20 +1,12 @@
 package com.example.coe.controllers;
 
 import com.example.coe.entities.Activity;
-import com.example.coe.entities.Blocker;
-import com.example.coe.entities.User;
 import com.example.coe.exception.NotFoundException;
 import com.example.coe.models.activities.ActivityDetailViewModel;
 import com.example.coe.models.activities.ActivityViewModel;
 import com.example.coe.models.activities.CreateActivityViewModel;
 import com.example.coe.models.activities.UpdateActivityViewModel;
-import com.example.coe.models.blockers.BlockerViewModel;
-import com.example.coe.models.blockers.CreateBlockerViewModel;
-import com.example.coe.models.blockers.UpdateBlockerViewModel;
-import com.example.coe.models.users.UserDetailViewModel;
-import com.example.coe.models.users.UserViewModel;
 import com.example.coe.repositories.ActivityRepository;
-import com.example.coe.repositories.UserRepository;
 import com.example.coe.utils.mapper.Mapper;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.Test;
@@ -43,7 +35,7 @@ public class ActivityControllerTest {
 
 
     @Test
-    void getAllActivities_whenCalled_retrievesAllActivities(){
+    void getAllActivities_whenCalled_retrievesAllActivities() {
 
         //Arrange: Set up test data
         var activities = Stream.of(new Activity()).collect(Collectors.toList());
@@ -94,6 +86,7 @@ public class ActivityControllerTest {
         ThrowableAssert.ThrowingCallable throwingCallable = () -> activityController.getActivity(1);
         assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("Activity not found");
     }
+
     @Test
     void createActivity_whenCalledWithValidDetails_addsActivityToRepository() {
 
@@ -151,6 +144,7 @@ public class ActivityControllerTest {
         ThrowableAssert.ThrowingCallable throwingCallable = () -> activityController.updateActivity(1, updateActivityViewModel);
         assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("Activity not found");
     }
+
     @Test
     void deleteActivity_whenCalledWithValidDetails_returnsNoContent() {
 

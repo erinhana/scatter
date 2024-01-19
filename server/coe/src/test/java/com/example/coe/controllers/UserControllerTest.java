@@ -1,11 +1,8 @@
 package com.example.coe.controllers;
 
-import com.example.coe.entities.Blocker;
 import com.example.coe.entities.Todo;
 import com.example.coe.entities.User;
 import com.example.coe.exception.NotFoundException;
-import com.example.coe.models.blockers.BlockerDetailViewModel;
-import com.example.coe.models.blockers.BlockerViewModel;
 import com.example.coe.models.todos.TodoViewModel;
 import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
@@ -36,6 +33,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTest {
 
+    @Captor
+    ArgumentCaptor<User> userArgumentCaptor;
     @Mock
     private UserRepository userRepository;
     @Mock
@@ -46,9 +45,6 @@ public class UserControllerTest {
     private UserController userController;
     @Mock
     private PasswordEncoder passwordEncoder;
-    @Captor
-    ArgumentCaptor<User> userArgumentCaptor;
-
 
     @Test
     void getAllUsers_whenCalled_retrievesAllUsers() {
@@ -218,8 +214,6 @@ public class UserControllerTest {
         assertThat(result.getBody()).isEqualTo(todoViewModels);
 
     }
-
-
 
 
 }
