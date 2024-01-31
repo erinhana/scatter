@@ -88,7 +88,7 @@ public class UserController {
     @Operation(summary = "Delete User")
     public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
         var existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
+                .orElseThrow(() -> new NotFoundException("No user exists with Id", userId));
 
         userRepository.delete(existingUser);
 
