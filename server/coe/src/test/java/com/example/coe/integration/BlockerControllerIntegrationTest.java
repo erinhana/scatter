@@ -244,7 +244,6 @@ public class BlockerControllerIntegrationTest {
         assertThat(errorResponse.getStatus()).isEqualTo(NOT_FOUND.value());
         assertThat(errorResponse.getMessage()).isEqualTo("No blocker exists with Id");
 
-
     }
 
 
