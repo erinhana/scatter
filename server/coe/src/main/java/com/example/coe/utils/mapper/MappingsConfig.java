@@ -1,5 +1,6 @@
 package com.example.coe.utils.mapper;
 
+import com.example.coe.mappings.ActivityToActivityViewModel;
 import com.example.coe.mappings.BlockerToBlockerViewModel;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ public class MappingsConfig {
     @PostConstruct
     public void addMappings() {
         mapper.addSourceToTargetMapping(new BlockerToBlockerViewModel());
+        mapper.addSourceToTargetMapping(new ActivityToActivityViewModel());
     }
 
 

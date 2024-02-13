@@ -5,8 +5,6 @@ import com.example.coe.integration.responses.ErrorItemResponse;
 import com.example.coe.integration.responses.ErrorResponse;
 import com.example.coe.models.activities.ActivityViewModel;
 import com.example.coe.models.activities.CreateActivityViewModel;
-import com.example.coe.models.users.CreateUserViewModel;
-import com.example.coe.models.users.UserViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.javacrumbs.jsonunit.core.Option;
 import org.junit.jupiter.api.Test;
@@ -40,7 +38,7 @@ public class ActivityControllerIntegrationTest {
         @Test
         void createActivity_whenSuppliedWithValidData_returnsIsCreated() throws Exception {
 
-            var newActivity = new CreateActivityViewModel(11,"Work out", "Run a 5k");
+            var newActivity = new CreateActivityViewModel(9, "Work out", "Run a 5k");
 
             var result = mockMvc.perform(MockMvcRequestBuilders.post("/activities")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -53,7 +51,11 @@ public class ActivityControllerIntegrationTest {
             assertThat(activityResponse.getId())
                     .isEqualTo(11);
             assertThat(activityResponse.getTitle())
+                    .isEqualTo(newActivity.getTitle());
+            assertThat(activityResponse.getDescription())
                     .isEqualTo(newActivity.getDescription());
+            assertThat(activityResponse.getTodoId())
+                    .isEqualTo(newActivity.getTodoId());
         }
     @Test
     void createActivity_whenSuppliedWithInValidData_returnsBadRequest() throws Exception {
