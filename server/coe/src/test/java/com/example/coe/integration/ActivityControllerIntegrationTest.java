@@ -49,7 +49,7 @@ public class ActivityControllerIntegrationTest {
         var activityResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ActivityViewModel.class);
 
         assertThat(activityResponse.getId())
-                .isEqualTo(9);
+                .isEqualTo(11);
         assertThat(activityResponse.getTitle())
                 .isEqualTo(newActivity.getTitle());
         assertThat(activityResponse.getDescription())

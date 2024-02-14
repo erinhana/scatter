@@ -16,8 +16,7 @@ public class DockerComposeExtension implements BeforeAllCallback, AfterAllCallba
     public void beforeAll(ExtensionContext context) {
         environment = new DockerComposeContainer(new File("../../docker-compose.yml"))
                 .withExposedService("db", 5432, Wait.forListeningPort())
-                .waitingFor("flyway_1", Wait.forLogMessage(".*Successfully applied.*", 1))
-                .withLocalCompose(true);
+                .waitingFor("flyway_1", Wait.forLogMessage(".*Successfully applied.*", 1));
         environment.start();
     }
 
