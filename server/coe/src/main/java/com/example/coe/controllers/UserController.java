@@ -51,7 +51,7 @@ public class UserController {
     @Operation(summary = "Get User")
     public ResponseEntity<UserDetailViewModel> getUser(@PathVariable int userId) {
         var user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
+                .orElseThrow(() -> new NotFoundException("No user exists with Id %d", userId));
 
         return ResponseEntity.ok(mapper.map(user, UserDetailViewModel.class));
 
@@ -74,7 +74,7 @@ public class UserController {
     @Operation(summary = "Update User")
     public ResponseEntity<Void> updateUser(@PathVariable Integer userId, @RequestBody @Valid UpdateUserViewModel model) {
         var user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
+                .orElseThrow(() -> new NotFoundException("No user exists with Id %d", userId));
 
         mapper.map(model, user);
         user.setPassword(passwordEncoder.encode(model.getPassword()));
@@ -88,7 +88,7 @@ public class UserController {
     @Operation(summary = "Delete User")
     public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
         var existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("No user exists with Id", userId));
+                .orElseThrow(() -> new NotFoundException("No user exists with Id %d", userId));
 
         userRepository.delete(existingUser);
 
