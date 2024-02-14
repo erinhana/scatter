@@ -128,7 +128,10 @@ What is blocking you from completing todo/activity
 Distraction or obstacle
 
 ### Activity Blockers:
-Specific blocker to a specific activity e.g Lost study guide therefore couldn’t revise
+Specific blocker to a specific activity e.g Lost study guide, therefore, couldn’t revise
+
+
+
 
 ### API Specifications
 
