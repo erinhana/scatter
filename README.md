@@ -115,19 +115,19 @@ erDiagram
 
     }
  ```
-### Todos:
+## Todos:
 What you want to complete
 
-### Activities:
+## Activities:
 The occurrence of a todo
 
-### Blockers:
+## Blockers:
 What is blocking you from completing todo/activity
 
-### Blocker Types:
+## Blocker Types:
 Distraction or obstacle
 
-### Activity Blockers:
+## Activity Blockers:
 Specific blocker to a specific activity e.g Lost study guide, therefore, couldn’t revise
 
 
