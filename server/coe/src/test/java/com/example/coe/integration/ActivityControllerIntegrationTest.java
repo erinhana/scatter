@@ -72,7 +72,7 @@ public class ActivityControllerIntegrationTest {
         var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
 
         ErrorItemResponse[] expectedFieldErrors = new ErrorItemResponse[]{
-                new ErrorItemResponse("todoId", "Todo not found"),
+                new ErrorItemResponse("todoId", "No todo exists with Id %d"),
                 new ErrorItemResponse("title", "must not be blank"),
                 new ErrorItemResponse("description", "must not be blank"),
         };
@@ -83,6 +83,5 @@ public class ActivityControllerIntegrationTest {
                 .when(Option.IGNORING_ARRAY_ORDER)
                 .isEqualTo(expectedFieldErrors);
     }
-
 
 }
