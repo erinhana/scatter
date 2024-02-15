@@ -11,7 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateActivityViewModel {
-    
+
+    @NotNull
     private int todoId;
     private String title;
     private String description;
