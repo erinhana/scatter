@@ -1,6 +1,8 @@
 package com.example.coe.models.activities;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +16,11 @@ public class CreateActivityViewModel {
 
     @NotNull
     private int todoId;
+    @NotNull
+    @Size(min = 5, max = 100)
     private String title;
+    @NotNull
+    @Size(min = 5, max = 100)
     private String description;
 
 }
