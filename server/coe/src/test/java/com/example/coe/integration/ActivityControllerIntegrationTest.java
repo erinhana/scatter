@@ -5,6 +5,8 @@ import com.example.coe.integration.responses.ErrorItemResponse;
 import com.example.coe.integration.responses.ErrorResponse;
 import com.example.coe.models.activities.ActivityViewModel;
 import com.example.coe.models.activities.CreateActivityViewModel;
+import com.example.coe.models.activities.UpdateActivityViewModel;
+import com.example.coe.models.blockers.UpdateBlockerViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.javacrumbs.jsonunit.core.Option;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,7 @@ import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith({SpringExtension.class, DockerComposeExtension.class})
@@ -61,7 +64,7 @@ public class ActivityControllerIntegrationTest {
     @Test
     void createActivity_whenSuppliedWithInValidData_returnsBadRequest() throws Exception {
 
-        var newActivity = new CreateActivityViewModel();
+        var newActivity = new CreateActivityViewModel(9, "Test", "Test");
 
         var result = mockMvc.perform(post("/activities")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -84,4 +87,61 @@ public class ActivityControllerIntegrationTest {
                 .isEqualTo(expectedFieldErrors);
     }
 
+    @Test
+    void updateActivity_whenSuppliedWithValidData_returnsNoContent() throws Exception {
+        UpdateActivityViewModel updateActivity = new UpdateActivityViewModel(
+                9,
+                9,
+                "Work out",
+                "Run a 10k",
+                60
+        );
+
+        mockMvc.perform(put("/activities/9")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateActivity)))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void updateActivity_whenSuppliedWithValidDataButNoRecord_returnsNotFound() throws Exception {
+        UpdateActivityViewModel updateActivity = new UpdateActivityViewModel(
+                11,
+                11,
+                "Clean car",
+                "Hoovered the inside",
+                60
+        );
+
+        mockMvc.perform(put("/activities/11")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateActivity)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void updateActivity_whenSuppliedWithInValidData_returnsBadRequest() throws Exception {
+        UpdateActivityViewModel updateActivity = new UpdateActivityViewModel(
+                11,
+                9,
+                "",
+                "",
+                60
+        );
+
+        var result = mockMvc.perform(put("/activities/11")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateActivity)))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
+
+        assertThat(errorResponse.getStatus()).isEqualTo(BAD_REQUEST.value());
+        assertThat(errorResponse.getMessage()).isEqualTo("validation error");
+
+
+    }
 }
+
+
