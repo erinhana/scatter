@@ -1,13 +1,17 @@
 package com.example.coe.integration;
 
+import com.example.coe.controllers.UserController;
 import com.example.coe.integration.extensions.DockerComposeExtension;
 import com.example.coe.integration.responses.ErrorItemResponse;
 import com.example.coe.integration.responses.ErrorResponse;
 import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
+import com.example.coe.models.users.UserDetailViewModel;
 import com.example.coe.models.users.UserViewModel;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.javacrumbs.jsonunit.core.Option;
+import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.List;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -36,6 +42,68 @@ public class UserControllerIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+
+    @Test
+    void getUser_whenCalledWithValidId_returnsIsOk() throws Exception {
+
+        var result = mockMvc.perform(get("/users/2"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        var userDetailResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), UserDetailViewModel.class);
+
+        assertThat(userDetailResponse.getId())
+                .isEqualTo(2);
+        assertThat(userDetailResponse.getEmail())
+                .isEqualTo("testuser1000@test.com");
+        assertThat(userDetailResponse.getFirstName())
+                .isEqualTo("Test2");
+        assertThat(userDetailResponse.getLastName())
+                .isEqualTo("User2");
+//        assertThat(userDetailResponse.getNumberOfTodosCreated())
+//                .isEqualTo();
+//        assertThat(userDetailResponse.getNumberOfTodosInProgress())
+//                .isEqualTo();
+//        assertThat(userDetailResponse.getNumberOfTodosCompleted())
+//                .isEqualTo();
+//        assertThat(userDetailResponse.getNumberOfActivityBlockers())
+//                .isEqualTo();
+
+    }
+
+    @Test
+    void getUser_whenCalledWithInvalidId_throwsNotFoundException() throws Exception {
+
+        var result = mockMvc.perform(get("/users/98"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
+
+        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
+
+        assertThat(errorResponse.getStatus()).isEqualTo(NOT_FOUND.value());
+        assertThat(errorResponse.getMessage()).isEqualTo("User not found");
+    }
+
+    @Test
+    void getAllUsers_whenCalled_returnsIsOk() throws Exception {
+
+        var result = mockMvc.perform(get("/users"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        var userResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(),
+                new TypeReference<List<UserController>>() {
+                });
+
+        AssertionsForInterfaceTypes.assertThat(userResponse)
+                .isNotEmpty();
+        assertThat(userResponse.get(0).getAllUsers())
+                .isEqualTo(1);
+
+
+    }
 
     @Test
     void createUser_whenSuppliedWithValidData_returnsIsCreated() throws Exception {

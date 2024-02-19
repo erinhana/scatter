@@ -6,7 +6,6 @@ import com.example.coe.integration.responses.ErrorResponse;
 import com.example.coe.models.activities.ActivityViewModel;
 import com.example.coe.models.activities.CreateActivityViewModel;
 import com.example.coe.models.activities.UpdateActivityViewModel;
-import com.example.coe.models.blockers.UpdateBlockerViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.javacrumbs.jsonunit.core.Option;
 import org.junit.jupiter.api.Test;
@@ -22,8 +21,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith({SpringExtension.class, DockerComposeExtension.class})
@@ -140,8 +139,31 @@ public class ActivityControllerIntegrationTest {
         assertThat(errorResponse.getStatus()).isEqualTo(BAD_REQUEST.value());
         assertThat(errorResponse.getMessage()).isEqualTo("validation error");
 
+    }
+
+    @Test
+    void deleteActivity_whenCalledWithValidId_returnsIsNoContent() throws Exception {
+        var result = mockMvc.perform(delete("/activities/2"))
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        assertThat(result.getResponse().getContentAsByteArray()).isEmpty();
+    }
+
+    @Test
+    void deleteActivity_whenCalledWithInvalidId_throwsNotFoundException() throws Exception {
+        var result = mockMvc.perform(delete("/activities/99"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
+        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
+
+        assertThat(errorResponse.getStatus()).isEqualTo(NOT_FOUND.value());
+        assertThat(errorResponse.getMessage()).isEqualTo("No activity exists with this Id");
 
     }
+
+
 }
 
 
