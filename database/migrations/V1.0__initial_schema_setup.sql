@@ -54,6 +54,7 @@ CREATE TABLE blockers (
 
 CREATE TABLE activity_blockers (
     id serial CONSTRAINT activity_blocker_pk PRIMARY KEY,
+    user_id INTEGER NOT NULL,
     blocker_id INTEGER NOT NULL,
     activity_id INTEGER NOT NULL,
     time_spent INTEGER NOT NULL,

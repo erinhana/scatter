@@ -1,5 +1,6 @@
 package com.example.coe.controllers;
 
+import com.example.coe.entities.Todo;
 import com.example.coe.entities.User;
 import com.example.coe.exception.NotFoundException;
 import com.example.coe.models.todos.TodoViewModel;
@@ -53,7 +54,22 @@ public class UserController {
         var user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("No user exists with Id %d", userId));
 
-        return ResponseEntity.ok(mapper.map(user, UserDetailViewModel.class));
+       var userDetails = mapper.map(user, UserDetailViewModel.class);
+
+        var todo = todoRepository.findByUserId(userId);
+
+        int numberOfTodosCompleted = 0;
+        for (Todo value : todo)
+            if (value != null)
+                numberOfTodosCompleted++;
+
+        userDetails.setNumberOfTodosCreated(todo.size());
+        userDetails.setNumberOfTodosInProgress(todo.size() - numberOfTodosCompleted);
+        userDetails.setNumberOfTodosCompleted(numberOfTodosCompleted);
+        // TODO update the activity blockers table to have userId
+        // TODO Add in more test data e.g a user with 3 todos and/or multiple activities
+
+        return ResponseEntity.ok(userDetails);
 
 
     }
