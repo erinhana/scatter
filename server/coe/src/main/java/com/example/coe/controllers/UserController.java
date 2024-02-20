@@ -7,6 +7,7 @@ import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailViewModel;
 import com.example.coe.models.users.UserViewModel;
+import com.example.coe.repositories.ActivityBlockerRepository;
 import com.example.coe.repositories.TodoRepository;
 import com.example.coe.repositories.UserRepository;
 import com.example.coe.utils.mapper.Mapper;
@@ -27,7 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-
+    private final ActivityBlockerRepository activityBlockerRepository;
     private final UserRepository userRepository;
     private final TodoRepository todoRepository;
     private final Mapper mapper;
@@ -53,9 +54,10 @@ public class UserController {
         var user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("No user exists with Id %d", userId));
 
-        return ResponseEntity.ok(mapper.map(user, UserDetailViewModel.class));
+        var userDetails = mapper.map(user, UserDetailViewModel.class);
+        userDetails.setNumberOfActivityBlockers(activityBlockerRepository.findActivityBlockersByUserId(userId).size());
 
-
+        return ResponseEntity.ok(userDetails);
     }
 
 
