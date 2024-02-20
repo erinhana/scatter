@@ -33,31 +33,37 @@ INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
 values (1, 'Collect Prescription', '2023-10-02', now(), now());
 
 INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
-values (2, 'Walk Dog', '2023-10-02', now(), now());
+values (1, 'Walk Dog', '2023-10-02', now(), now());
 
 INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
-values (3, 'Food Shop', '2023-09-15', now(), now());
+values (1, 'Food Shop', '2023-09-15', now(), now());
 
 INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
-values (4, 'Study', '2023-09-15', now(), now());
+values (2, 'Study', '2023-09-15', now(), now());
 
 INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
-values (5, 'Change Sheets', '2023-09-20', now(), now());
+values (3, 'Change Sheets', '2023-09-20', now(), now());
 
 INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
-values (6, 'Put on Wash', '2023-09-12', now(), now());
+values (4, 'Put on Wash', '2023-09-12', now(), now());
 
 INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
-values (7, 'Get Petrol', '2023-09-12', now(), now());
+values (5, 'Get Petrol', '2023-09-12', now(), now());
 
 INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
-values (8, 'Do Homework', '2023-09-12', now(), now());
+values (6, 'Do Homework', '2023-09-12', now(), now());
 
 INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
-values (9, 'Go For A Run', '2023-09-15', now(), now());
+values (7, 'Go For A Run', '2023-09-15', now(), now());
 
 INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
-values (10, 'Feed Cat', '2023-09-11', now(), now());
+values (8, 'Feed Cat', '2023-09-11', now(), now());
+
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+values (9, 'Bake a Cake', '2023-09-11', now(), now());
+
+INSERT INTO todos (user_id, description, deadline, created_at, updated_at)
+values (10, 'Gym Session', '2023-09-11', now(), now());
 
 
 
@@ -99,12 +105,11 @@ INSERT INTO blocker_types (description)
 values ('Obstacle');
 
 INSERT INTO blockers (user_id, title, description, created_at, updated_at, blocker_type_id)
-values (1, 'No study guide', 'Lost study guide', now(), now(), 1), (1, 'Washing machine broken', 'No handy person available', now(), now(), 2);
+values (1, 'Misplaced car keys', 'No spare set', now(), now(), 1), (2, 'Bad weather', 'No waterproof coat for the dog', now(), now(), 2);
 
 
-
-INSERT INTO activity_blockers (blocker_id, activity_id, time_spent)
-values (1, 1, 15), (2, 5, 10);
+INSERT INTO activity_blockers (user_id, blocker_id, activity_id, time_spent)
+values (1, 1, 1, 15), (1, 2, 2, 10);
 
 
 
