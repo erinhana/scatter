@@ -8,6 +8,7 @@ import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailViewModel;
 import com.example.coe.models.users.UserViewModel;
+import com.example.coe.repositories.ActivityBlockerRepository;
 import com.example.coe.repositories.TodoRepository;
 import com.example.coe.repositories.UserRepository;
 import com.example.coe.utils.mapper.Mapper;
@@ -28,7 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-
+    private final ActivityBlockerRepository activityBlockerRepository;
     private final UserRepository userRepository;
     private final TodoRepository todoRepository;
     private final Mapper mapper;
@@ -59,15 +60,16 @@ public class UserController {
         var todo = todoRepository.findByUserId(userId);
 
         int numberOfTodosCompleted = 0;
+
         for (Todo value : todo)
-            if (value != null)
+            if (value.getCompletedAt() != null)
                 numberOfTodosCompleted++;
 
         userDetails.setNumberOfTodosCreated(todo.size());
         userDetails.setNumberOfTodosInProgress(todo.size() - numberOfTodosCompleted);
         userDetails.setNumberOfTodosCompleted(numberOfTodosCompleted);
-        // TODO update the activity blockers table to have userId
-        // TODO Add in more test data e.g a user with 3 todos and/or multiple activities
+
+        userDetails.setNumberOfActivityBlockers(activityBlockerRepository.findActivityBlockersByUserId(userId).size());
 
         return ResponseEntity.ok(userDetails);
 
