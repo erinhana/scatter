@@ -105,12 +105,22 @@ INSERT INTO blocker_types (description)
 values ('Obstacle');
 
 INSERT INTO blockers (user_id, title, description, created_at, updated_at, blocker_type_id)
-values (1, 'Misplaced car keys', 'No spare set', now(), now(), 1), (1, 'Bad weather', 'No waterproof coat for the dog', now(), now(), 2);
+values (1, 'Misplaced car keys', 'No spare set', now(), now(), 1); 
 
+INSERT INTO blockers (user_id, title, description, created_at, updated_at, blocker_type_id)
+values (1, 'Bad weather', 'No waterproof coat for the dog', now(), now(), 2);
+
+INSERT INTO blockers (user_id, title, description, created_at, updated_at, blocker_type_id)
+values (2, 'Lost study guide', 'Only study guide', now(), now(), 2);
 
 INSERT INTO activity_blockers (blocker_id, activity_id, time_spent)
-values (1, 1, 15), (2, 2, 10);
+values (1, 1, 15); 
 
+INSERT INTO activity_blockers (blocker_id, activity_id, time_spent)
+values (2, 2, 10);
+
+INSERT INTO activity_blockers (blocker_id, activity_id, time_spent)
+values (2, 4, 10);
 
 
 
