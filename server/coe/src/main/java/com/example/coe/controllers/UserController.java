@@ -53,9 +53,9 @@ public class UserController {
     @Operation(summary = "Get User")
     public ResponseEntity<UserDetailViewModel> getUser(@PathVariable int userId) {
         var user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("No user exists with Id %d", userId));
+                .orElseThrow(() -> new NotFoundException("No user exists with Id", userId));
 
-       var userDetails = mapper.map(user, UserDetailViewModel.class);
+        var userDetails = mapper.map(user, UserDetailViewModel.class);
 
         var todo = todoRepository.findByUserId(userId);
 
