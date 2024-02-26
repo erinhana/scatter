@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,16 @@ public class CustomRestExceptionHandler {
         BindingResult result = ex.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
         return processFieldErrors(fieldErrors);
+    }
+
+    @ResponseStatus(BAD_REQUEST)
+    @ResponseBody
+    @ExceptionHandler(DateTimeParseException.class)
+    public DateParseError dateTimeArgumentNotValidException(DateTimeParseException ex) {
+        return new DateParseError(BAD_REQUEST.value(), ex.getMessage());
+    }
+
+    record DateParseError(int status, String message) {
     }
 
     @ResponseStatus(NOT_FOUND)
@@ -72,5 +83,6 @@ public class CustomRestExceptionHandler {
 
     record NotFoundError(int status, String message) {
     }
+
 
 }

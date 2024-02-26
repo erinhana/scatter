@@ -83,7 +83,7 @@ public class UserControllerIntegrationTest {
         var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
 
         assertThat(errorResponse.getStatus()).isEqualTo(NOT_FOUND.value());
-        assertThat(errorResponse.getMessage()).isEqualTo("User not found");
+        assertThat(errorResponse.getMessage()).isEqualTo("No user exists with Id");
     }
 
     @Test

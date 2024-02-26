@@ -93,9 +93,9 @@ public class BlockerControllerIntegrationTest {
         assertThat(blockerResponse.get(0).getUserId())
                 .isEqualTo(1);
         assertThat(blockerResponse.get(0).getTitle())
-                .isEqualTo("No study guide");
+                .isEqualTo("Misplaced car keys");
         assertThat(blockerResponse.get(0).getDescription())
-                .isEqualTo("Lost study guide");
+                .isEqualTo("No spare set");
         assertThat(blockerResponse.get(0).getBlockerTypeId())
                 .isEqualTo(1);
 
