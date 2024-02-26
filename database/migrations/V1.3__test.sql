@@ -1,2 +1,2 @@
-INSERT INTO blocker_types (description  dfsd)
-values ('Distraction'), ('Obstacle')
+INSERT INTO blocker_types (description)
+values ('Health')
