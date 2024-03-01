@@ -3,11 +3,15 @@ package com.example.coe.integration;
 import com.example.coe.integration.extensions.DockerComposeExtension;
 import com.example.coe.integration.responses.ErrorItemResponse;
 import com.example.coe.integration.responses.ErrorResponse;
+import com.example.coe.models.activities.ActivityDetailViewModel;
 import com.example.coe.models.activities.ActivityViewModel;
 import com.example.coe.models.activities.CreateActivityViewModel;
 import com.example.coe.models.activities.UpdateActivityViewModel;
+import com.example.coe.models.users.UserViewModel;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.javacrumbs.jsonunit.core.Option;
+import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.List;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -35,6 +41,71 @@ public class ActivityControllerIntegrationTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Test
+    void getActivity_whenCalledWithValidId_returnsIsOk() throws Exception {
+
+        var result = mockMvc.perform(get("/activities/2"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        var activityResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ActivityDetailViewModel.class);
+
+        assertThat(activityResponse.getId())
+                .isEqualTo(2);
+//        assertThat(activityResponse.getTodoId())
+//                .isEqualTo(2);
+        assertThat(activityResponse.getTitle())
+                .isEqualTo("Walked dog");
+        assertThat(activityResponse.getDescription())
+                .isEqualTo("Took dog to the park");
+        assertThat(activityResponse.getCreatedAt())
+                .isNotNull();
+        assertThat(activityResponse.getUpdatedAt())
+                .isNotNull();
+        assertThat(activityResponse.getTimeSpent())
+                .isEqualTo(60);
+    }
+
+    @Test
+    void getActivity_whenCalledWithInValidId_returnsBadRequest() throws Exception {
+
+        var result = mockMvc.perform(get("/activities/98"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
+
+        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
+
+        assertThat(errorResponse.getStatus()).isEqualTo(NOT_FOUND.value());
+        assertThat(errorResponse.getMessage()).isEqualTo("No activity exists with this id");
+
+    }
+
+    @Test
+    void getAllActivities_whenCalled_returnsIsOk() throws Exception {
+
+        var result = mockMvc.perform(get("/activities"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        var activityResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(),
+                new TypeReference<List<ActivityViewModel>>() {
+                });
+
+        AssertionsForInterfaceTypes.assertThat(activityResponse)
+                .isNotEmpty();
+        assertThat(activityResponse.get(0).getId())
+                .isEqualTo(1);
+        assertThat(activityResponse.get(0).getTodoId())
+                .isEqualTo(1);
+        assertThat(activityResponse.get(0).getTitle())
+                .isEqualTo("Collected prescription from Chemists");
+        assertThat(activityResponse.get(0).getDescription())
+                .isEqualTo("Collect Prescription");
+        
+    }
 
 
     @Test
