@@ -4,6 +4,7 @@ import com.example.coe.controllers.UserController;
 import com.example.coe.integration.extensions.DockerComposeExtension;
 import com.example.coe.integration.responses.ErrorItemResponse;
 import com.example.coe.integration.responses.ErrorResponse;
+import com.example.coe.models.blockers.BlockerViewModel;
 import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailViewModel;
@@ -11,6 +12,7 @@ import com.example.coe.models.users.UserViewModel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.javacrumbs.jsonunit.core.Option;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,14 +63,6 @@ public class UserControllerIntegrationTest {
                 .isEqualTo("Test2");
         assertThat(userDetailResponse.getLastName())
                 .isEqualTo("User2");
-//        assertThat(userDetailResponse.getNumberOfTodosCreated())
-//                .isEqualTo();
-//        assertThat(userDetailResponse.getNumberOfTodosInProgress())
-//                .isEqualTo();
-//        assertThat(userDetailResponse.getNumberOfTodosCompleted())
-//                .isEqualTo();
-//        assertThat(userDetailResponse.getNumberOfActivityBlockers())
-//                .isEqualTo();
 
     }
 
@@ -87,6 +81,28 @@ public class UserControllerIntegrationTest {
     }
 
     @Test
+    void getAllTodosForUser_whenCalled_returnsIsOk() throws Exception {
+
+        var result = mockMvc.perform(get("/users/2/todos"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        var userDetailResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), UserDetailViewModel.class);
+
+        assertThat(userDetailResponse.getId())
+                .isEqualTo(2);
+        assertThat(userDetailResponse.getNumberOfTodosCreated())
+                .isEqualTo(1);
+        assertThat(userDetailResponse.getNumberOfTodosInProgress())
+                .isEqualTo(1);
+        assertThat(userDetailResponse.getNumberOfTodosCompleted())
+                .isEqualTo(0);
+        assertThat(userDetailResponse.getNumberOfActivityBlockers())
+                .isEqualTo(0);
+
+    }
+
+    @Test
     void getAllUsers_whenCalled_returnsIsOk() throws Exception {
 
         var result = mockMvc.perform(get("/users"))
@@ -94,14 +110,19 @@ public class UserControllerIntegrationTest {
                 .andReturn();
 
         var userResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(),
-                new TypeReference<List<UserController>>() {
+                new TypeReference<List<UserViewModel>>() {
                 });
 
         AssertionsForInterfaceTypes.assertThat(userResponse)
                 .isNotEmpty();
-        assertThat(userResponse.get(0).getAllUsers())
+        assertThat(userResponse.get(0).getId())
                 .isEqualTo(1);
-
+        assertThat(userResponse.get(0).getEmailAddress())
+                .isEqualTo("erin.hanafin@unosquare.com");
+        assertThat(userResponse.get(0).getFirstName())
+                .isEqualTo("Erin");
+        assertThat(userResponse.get(0).getLastName())
+                .isEqualTo("Hanafin");
 
     }
 
