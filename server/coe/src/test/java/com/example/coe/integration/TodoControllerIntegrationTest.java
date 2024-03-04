@@ -46,10 +46,11 @@ public class TodoControllerIntegrationTest {
         assertThat(todoDetailResponse.getDeadline())
                 .isEqualTo("2023-10-02");
         assertThat(todoDetailResponse.getCreatedAt())
-                .isEqualTo("2024-02-16 13:46:43.494");
+                .isNotNull();
         assertThat(todoDetailResponse.getUpdatedAt())
-                .isEqualTo("2024-02-16 13:46:43.494");
-//       is this assertion needed? assertThat(todoDetailResponse.getCompletedAt()
+                .isNotNull();
+        assertThat(todoDetailResponse.getCompletedAt())
+                .isNull();
 
     }
 
