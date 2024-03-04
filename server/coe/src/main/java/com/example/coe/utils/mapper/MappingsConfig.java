@@ -2,6 +2,7 @@ package com.example.coe.utils.mapper;
 
 import com.example.coe.mappings.BlockerToBlockerViewModel;
 import com.example.coe.mappings.ActivityToActivityViewModel;
+import com.example.coe.mappings.TodoToTodoViewModel;
 import com.example.coe.mappings.UserToUserDetailViewModel;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class MappingsConfig {
         mapper.addSourceToTargetMapping(new BlockerToBlockerViewModel());
         mapper.addSourceToTargetMapping(new ActivityToActivityViewModel());
         mapper.addSourceToTargetMapping(new UserToUserDetailViewModel());
+        mapper.addSourceToTargetMapping(new TodoToTodoViewModel());
     }
 
 
