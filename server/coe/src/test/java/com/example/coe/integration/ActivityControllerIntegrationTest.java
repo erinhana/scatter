@@ -104,7 +104,7 @@ public class ActivityControllerIntegrationTest {
                 .isEqualTo("Collected prescription from Chemists");
         assertThat(activityResponse.get(0).getDescription())
                 .isEqualTo("Collect Prescription");
-        
+
     }
 
 
