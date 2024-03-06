@@ -8,7 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -20,5 +21,5 @@ public class CreateTodoViewModel {
     private Integer userId;
     @NotBlank
     private String description;
-    private LocalDateTime deadline;
+    private Date deadline;
 }
