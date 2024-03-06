@@ -135,7 +135,7 @@ public class BlockerControllerIntegrationTest {
         var blockerResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), BlockerViewModel.class);
 
         assertThat(blockerResponse.getId())
-                .isEqualTo(3);
+                .isEqualTo(4);
         assertThat(blockerResponse.getTitle())
                 .isEqualTo("Test blocker");
         assertThat(blockerResponse.getDescription())

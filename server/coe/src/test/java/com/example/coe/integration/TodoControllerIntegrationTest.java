@@ -2,15 +2,23 @@ package com.example.coe.integration;
 
 import com.example.coe.integration.extensions.DockerComposeExtension;
 import com.example.coe.integration.responses.ErrorResponse;
+import com.example.coe.models.todos.CreateTodoViewModel;
 import com.example.coe.models.todos.TodoDetailViewModel;
+import com.example.coe.models.todos.TodoViewModel;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -68,10 +76,49 @@ public class TodoControllerIntegrationTest {
         assertThat(errorResponse.getMessage()).isEqualTo("Todo not found");
     }
 
-}
+    @Test
+    void getAllTodos_whenCalled_returnsIsOk() throws Exception {
 
-//    @Test
-//    void createTodo_whenSuppliedWithValidData_returnsIsCreated() throws Exception {
-//
-//    }
+        var result = mockMvc.perform(get("/todos"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        var todoResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(),
+                new TypeReference<List<TodoViewModel>>() {
+                });
+
+        AssertionsForInterfaceTypes.assertThat(todoResponse)
+                .isNotEmpty();
+        assertThat(todoResponse.get(0).getId())
+                .isEqualTo(1);
+        assertThat(todoResponse.get(0).getUserId())
+                .isEqualTo(1);
+        assertThat(todoResponse.get(0).getDescription())
+                .isEqualTo("Collect Prescription");
+    }
+
+
+    @Test
+    void createTodo_whenSuppliedWithValidData_returnsIsCreated() throws Exception {
+
+        var newTodo = new CreateTodoViewModel(10, "Return parcel", 2024-10-10);
+
+        var result = mockMvc.perform(MockMvcRequestBuilders.post("/todos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newTodo)))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        var todoResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), TodoViewModel.class);
+
+        assertThat(todoResponse.getUserId())
+                .isEqualTo(10);
+        assertThat(todoResponse.getDescription())
+                .isEqualTo("Return parcel");
+        assertThat(todoResponse.getDeadline())
+                .isEqualTo("2024-04-10");
+    }
+
+
+}
 
