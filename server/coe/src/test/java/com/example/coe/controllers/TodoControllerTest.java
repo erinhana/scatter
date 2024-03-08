@@ -1,6 +1,7 @@
 package com.example.coe.controllers;
 
 import com.example.coe.entities.Todo;
+import com.example.coe.entities.User;
 import com.example.coe.exception.NotFoundException;
 import com.example.coe.models.todos.CreateTodoViewModel;
 import com.example.coe.models.todos.TodoDetailViewModel;
@@ -98,7 +99,9 @@ public class TodoControllerTest {
         var todo = new Todo();
         var createdTodo = new Todo();
         var todoViewModel = new TodoViewModel();
+        var user = new User();
 
+        when(userRepository.findById(any())).thenReturn(Optional.of(user));
         when(mapper.map(createTodoViewModel, Todo.class)).thenReturn(todo);
         when(todoRepository.save(todo)).thenReturn(createdTodo);
         when(mapper.map(createdTodo, TodoViewModel.class)).thenReturn(todoViewModel);
