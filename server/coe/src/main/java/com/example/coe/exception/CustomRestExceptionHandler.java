@@ -34,9 +34,6 @@ public class CustomRestExceptionHandler {
         return new DateParseError(BAD_REQUEST.value(), ex.getMessage());
     }
 
-    record DateParseError(int status, String message) {
-    }
-
     @ResponseStatus(NOT_FOUND)
     @ResponseBody
     @ExceptionHandler(NotFoundException.class)
@@ -44,13 +41,15 @@ public class CustomRestExceptionHandler {
         return new NotFoundError(NOT_FOUND.value(), ex.getMessage());
     }
 
-
     private Error processFieldErrors(List<org.springframework.validation.FieldError> fieldErrors) {
         Error error = new Error(BAD_REQUEST.value(), "validation error");
         for (org.springframework.validation.FieldError fieldError : fieldErrors) {
             error.addFieldError(fieldError.getField(), fieldError.getDefaultMessage());
         }
         return error;
+    }
+
+    record DateParseError(int status, String message) {
     }
 
     static class Error {

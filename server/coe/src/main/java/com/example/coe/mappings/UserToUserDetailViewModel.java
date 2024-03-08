@@ -8,10 +8,8 @@ import org.modelmapper.PropertyMap;
 public class UserToUserDetailViewModel implements SourceToTargetMapping<User, UserDetailViewModel> {
     @Override
     public PropertyMap<User, UserDetailViewModel> mapFromSourceToTarget() {
-        return new PropertyMap<>()
-        {
-            protected void configure()
-            {
+        return new PropertyMap<>() {
+            protected void configure() {
                 map(source.getEmailAddress(), destination.getEmail());
             }
         };

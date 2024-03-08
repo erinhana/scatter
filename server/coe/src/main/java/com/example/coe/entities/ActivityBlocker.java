@@ -6,8 +6,7 @@ import lombok.Getter;
 @Entity
 @Table(name = "activity_blockers")
 @Getter
-public class ActivityBlocker
-{
+public class ActivityBlocker {
     @Id
     @SequenceGenerator(name = "activity_blockers_sequence", sequenceName = "activity_blockers_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

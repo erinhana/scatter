@@ -1,9 +1,6 @@
 package com.example.coe.utils.mapper;
 
-import com.example.coe.mappings.BlockerToBlockerViewModel;
-import com.example.coe.mappings.ActivityToActivityViewModel;
-import com.example.coe.mappings.TodoToTodoViewModel;
-import com.example.coe.mappings.UserToUserDetailViewModel;
+import com.example.coe.mappings.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +17,7 @@ public class MappingsConfig {
         mapper.addSourceToTargetMapping(new ActivityToActivityViewModel());
         mapper.addSourceToTargetMapping(new UserToUserDetailViewModel());
         mapper.addSourceToTargetMapping(new TodoToTodoViewModel());
+        mapper.addSourceToTargetMapping(new TodoToTodoDetailViewModel());
     }
 
 

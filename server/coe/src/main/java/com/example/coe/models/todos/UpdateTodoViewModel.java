@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,6 +17,6 @@ public class UpdateTodoViewModel {
     @NotNull
     private int userId;
     private String description;
-    private LocalDateTime deadline;
+    private LocalDate deadline;
     private LocalDateTime completedAt;
 }

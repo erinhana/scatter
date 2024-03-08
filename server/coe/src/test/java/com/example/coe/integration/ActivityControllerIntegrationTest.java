@@ -7,7 +7,6 @@ import com.example.coe.models.activities.ActivityDetailViewModel;
 import com.example.coe.models.activities.ActivityViewModel;
 import com.example.coe.models.activities.CreateActivityViewModel;
 import com.example.coe.models.activities.UpdateActivityViewModel;
-import com.example.coe.models.users.UserViewModel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.javacrumbs.jsonunit.core.Option;

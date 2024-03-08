@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -16,7 +16,7 @@ public class TodoViewModel {
     private int id;
     private int userId;
     private String description;
-    private Date deadline;
+    private LocalDate deadline;
 
 
 }

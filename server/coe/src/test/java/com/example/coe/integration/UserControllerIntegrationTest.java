@@ -1,10 +1,8 @@
 package com.example.coe.integration;
 
-import com.example.coe.controllers.UserController;
 import com.example.coe.integration.extensions.DockerComposeExtension;
 import com.example.coe.integration.responses.ErrorItemResponse;
 import com.example.coe.integration.responses.ErrorResponse;
-import com.example.coe.models.blockers.BlockerViewModel;
 import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailViewModel;
@@ -12,7 +10,6 @@ import com.example.coe.models.users.UserViewModel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.javacrumbs.jsonunit.core.Option;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
