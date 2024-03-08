@@ -18,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Calendar;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -100,8 +101,9 @@ public class TodoControllerIntegrationTest {
 
     @Test
     void createTodo_whenSuppliedWithValidData_returnsIsCreated() throws Exception {
-
-        var newTodo = new CreateTodoViewModel(10, "Return parcel", 2024-10-10);
+        Calendar cal = Calendar.getInstance();
+        cal.set(2024, Calendar.APRIL, 10);
+        var newTodo = new CreateTodoViewModel(10, "Return parcel", cal);
 
         var result = mockMvc.perform(MockMvcRequestBuilders.post("/todos")
                         .contentType(MediaType.APPLICATION_JSON)
