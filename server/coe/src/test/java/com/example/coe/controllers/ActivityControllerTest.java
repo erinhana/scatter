@@ -96,6 +96,7 @@ public class ActivityControllerTest {
         var createdActivity = new Activity();
         var activityViewModel = new ActivityViewModel();
 
+
         when(mapper.map(createActivityViewModel, Activity.class)).thenReturn(activity);
         when(activityRepository.save(activity)).thenReturn(createdActivity);
         when(mapper.map(createdActivity, ActivityViewModel.class)).thenReturn(activityViewModel);
