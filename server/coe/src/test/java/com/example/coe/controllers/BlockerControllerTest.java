@@ -2,10 +2,12 @@ package com.example.coe.controllers;
 
 import com.example.coe.entities.Blocker;
 import com.example.coe.entities.BlockerType;
+import com.example.coe.entities.User;
 import com.example.coe.exception.NotFoundException;
 import com.example.coe.models.blockers.*;
 import com.example.coe.repositories.BlockerRepository;
 import com.example.coe.repositories.BlockerTypeRepository;
+import com.example.coe.repositories.UserRepository;
 import com.example.coe.utils.mapper.Mapper;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,9 @@ import static org.mockito.Mockito.*;
 public class BlockerControllerTest {
     @Mock
     private BlockerRepository blockerRepository;
+
+    @Mock
+    private UserRepository userRepository;
 
     @Mock
     private BlockerTypeRepository blockerTypeRepository;
@@ -121,7 +126,9 @@ public class BlockerControllerTest {
         var blocker = new Blocker();
         var createdBlocker = new Blocker();
         var blockerViewModel = new BlockerViewModel();
+        var user = new User();
 
+        when(userRepository.getReferenceById(any())).thenReturn(user);
         when(mapper.map(createBlockerViewModel, Blocker.class)).thenReturn(blocker);
         when(blockerRepository.save(blocker)).thenReturn(createdBlocker);
         when(mapper.map(createdBlocker, BlockerViewModel.class)).thenReturn(blockerViewModel);
