@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,13 @@ public class CustomRestExceptionHandler {
         return processFieldErrors(fieldErrors);
     }
 
+    @ResponseStatus(BAD_REQUEST)
+    @ResponseBody
+    @ExceptionHandler(DateTimeParseException.class)
+    public DateParseError dateTimeArgumentNotValidException(DateTimeParseException ex) {
+        return new DateParseError(BAD_REQUEST.value(), ex.getMessage());
+    }
+
     @ResponseStatus(NOT_FOUND)
     @ResponseBody
     @ExceptionHandler(NotFoundException.class)
@@ -33,13 +41,15 @@ public class CustomRestExceptionHandler {
         return new NotFoundError(NOT_FOUND.value(), ex.getMessage());
     }
 
-
     private Error processFieldErrors(List<org.springframework.validation.FieldError> fieldErrors) {
         Error error = new Error(BAD_REQUEST.value(), "validation error");
         for (org.springframework.validation.FieldError fieldError : fieldErrors) {
             error.addFieldError(fieldError.getField(), fieldError.getDefaultMessage());
         }
         return error;
+    }
+
+    record DateParseError(int status, String message) {
     }
 
     static class Error {
@@ -72,5 +82,6 @@ public class CustomRestExceptionHandler {
 
     record NotFoundError(int status, String message) {
     }
+
 
 }

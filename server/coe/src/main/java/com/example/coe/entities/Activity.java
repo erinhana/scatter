@@ -21,6 +21,9 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "activities_sequence")
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "todo_id", updatable = false, nullable = false)
+    private Todo todo;
     @Column(name = "title", nullable = false)
     private String title;
     @Column(name = "description", nullable = false)
@@ -32,9 +35,3 @@ public class Activity {
     @Column(name = "time_spent", nullable = false)
     private int timeSpent;
 }
-
-
-//    todo_id INTEGER NOT NULL,
-//    time_spent INTEGER NOT NULL,
-//    CONSTRAINT activity_todos_todo_id_fk FOREIGN KEY (todo_id)
-//    REFERENCES todos (id)

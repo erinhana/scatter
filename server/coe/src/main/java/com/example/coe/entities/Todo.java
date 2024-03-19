@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "todos")
@@ -24,7 +24,7 @@ public class Todo {
     @Column(name = "description", nullable = false)
     private String description;
     @Column(name = "deadline", nullable = false)
-    private Date deadline;
+    private LocalDate deadline;
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
     @Column(name = "updated_at", nullable = false)

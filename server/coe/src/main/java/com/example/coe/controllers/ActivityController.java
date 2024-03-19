@@ -7,6 +7,7 @@ import com.example.coe.models.activities.ActivityViewModel;
 import com.example.coe.models.activities.CreateActivityViewModel;
 import com.example.coe.models.activities.UpdateActivityViewModel;
 import com.example.coe.repositories.ActivityRepository;
+import com.example.coe.repositories.TodoRepository;
 import com.example.coe.utils.mapper.Mapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -27,6 +29,7 @@ import java.util.List;
 public class ActivityController {
 
     private final ActivityRepository activityRepository;
+    private final TodoRepository todoRepository;
     private final Mapper mapper;
 
     @GetMapping
@@ -55,6 +58,15 @@ public class ActivityController {
     @Operation(summary = "Create Activity")
     public ResponseEntity<ActivityViewModel> createActivity(@RequestBody @Valid CreateActivityViewModel model) {
         var newActivity = mapper.map(model, Activity.class);
+        var todo = todoRepository.findById(model.getTodoId())
+                .orElseThrow(() -> new NotFoundException("No todo exists with Id %d", model.getTodoId()));
+
+        LocalDateTime date = LocalDateTime.now();
+
+        newActivity.setTodo(todo);
+        newActivity.setCreatedAt(date);
+        newActivity.setUpdatedAt(date);
+
         var createdActivity = activityRepository.save(newActivity);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(createdActivity, ActivityViewModel.class));
