@@ -53,8 +53,8 @@ public class ActivityControllerIntegrationTest {
 
         assertThat(activityResponse.getId())
                 .isEqualTo(2);
-//        assertThat(activityResponse.getTodoId())
-//                .isEqualTo(2);
+        assertThat(activityResponse.getTodoId())
+                .isEqualTo(2);
         assertThat(activityResponse.getTitle())
                 .isEqualTo("Walked dog");
         assertThat(activityResponse.getDescription())
@@ -144,9 +144,8 @@ public class ActivityControllerIntegrationTest {
         var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
 
         ErrorItemResponse[] expectedFieldErrors = new ErrorItemResponse[]{
-                new ErrorItemResponse("todoId", "No todo exists with Id %d"),
-                new ErrorItemResponse("title", "must not be blank"),
-                new ErrorItemResponse("description", "must not be blank"),
+                new ErrorItemResponse("description", "size must be between 5 and 100"),
+                new ErrorItemResponse("title", "size must be between 5 and 100"),
         };
 
         assertThat(errorResponse.getStatus()).isEqualTo(BAD_REQUEST.value());
@@ -191,14 +190,14 @@ public class ActivityControllerIntegrationTest {
     @Test
     void updateActivity_whenSuppliedWithInValidData_returnsBadRequest() throws Exception {
         UpdateActivityViewModel updateActivity = new UpdateActivityViewModel(
-                11,
+                1,
                 9,
                 "",
                 "",
                 60
         );
 
-        var result = mockMvc.perform(put("/activities/11")
+        var result = mockMvc.perform(put("/activities/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateActivity)))
                 .andExpect(status().isBadRequest())

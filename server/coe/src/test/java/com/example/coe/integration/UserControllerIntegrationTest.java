@@ -3,6 +3,7 @@ package com.example.coe.integration;
 import com.example.coe.integration.extensions.DockerComposeExtension;
 import com.example.coe.integration.responses.ErrorItemResponse;
 import com.example.coe.integration.responses.ErrorResponse;
+import com.example.coe.models.todos.TodoViewModel;
 import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailViewModel;
@@ -10,7 +11,6 @@ import com.example.coe.models.users.UserViewModel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.javacrumbs.jsonunit.core.Option;
-import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
+import java.util.Objects;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -84,18 +85,16 @@ public class UserControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        var userDetailResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), UserDetailViewModel.class);
+        var userDetailResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), TodoViewModel[].class);
 
-        assertThat(userDetailResponse.getId())
+        assertThat(userDetailResponse[0].getId())
+                .isEqualTo(4);
+        assertThat(userDetailResponse[0].getUserId())
                 .isEqualTo(2);
-        assertThat(userDetailResponse.getNumberOfTodosCreated())
-                .isEqualTo(1);
-        assertThat(userDetailResponse.getNumberOfTodosInProgress())
-                .isEqualTo(1);
-        assertThat(userDetailResponse.getNumberOfTodosCompleted())
-                .isEqualTo(0);
-        assertThat(userDetailResponse.getNumberOfActivityBlockers())
-                .isEqualTo(0);
+        assertThat(userDetailResponse[0].getDescription())
+                .isEqualTo("Study");
+        assertThat(userDetailResponse[0].getDeadline())
+                .isEqualTo("2023-09-15");
 
     }
 
@@ -110,15 +109,16 @@ public class UserControllerIntegrationTest {
                 new TypeReference<List<UserViewModel>>() {
                 });
 
-        AssertionsForInterfaceTypes.assertThat(userResponse)
-                .isNotEmpty();
-        assertThat(userResponse.get(0).getId())
+        var user = userResponse.stream()
+                .filter(u -> Objects.equals(u.getEmailAddress(), "erin.hanafin@unosquare.com")).toList().get(0);
+
+        assertThat(user)
+                .isNotNull();
+        assertThat(user.getId())
                 .isEqualTo(1);
-        assertThat(userResponse.get(0).getEmailAddress())
-                .isEqualTo("erin.hanafin@unosquare.com");
-        assertThat(userResponse.get(0).getFirstName())
+        assertThat(user.getFirstName())
                 .isEqualTo("Erin");
-        assertThat(userResponse.get(0).getLastName())
+        assertThat(user.getLastName())
                 .isEqualTo("Hanafin");
 
     }
@@ -177,7 +177,7 @@ public class UserControllerIntegrationTest {
                 "User",
                 "Password1");
 
-        mockMvc.perform(put("/users/1")
+        mockMvc.perform(put("/users/9")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateUser)))
                 .andExpect(status().isNoContent());
@@ -215,7 +215,7 @@ public class UserControllerIntegrationTest {
 
     @Test
     void deleteUser_whenCalledWithValidId_returnsIsNoContent() throws Exception {
-        var result = mockMvc.perform(delete("/users/2"))
+        var result = mockMvc.perform(delete("/users/10"))
                 .andExpect(status().isNoContent())
                 .andReturn();
 
@@ -231,7 +231,7 @@ public class UserControllerIntegrationTest {
         var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
 
         assertThat(errorResponse.getStatus()).isEqualTo(NOT_FOUND.value());
-        assertThat(errorResponse.getMessage()).isEqualTo("No user exists with Id");
+        assertThat(errorResponse.getMessage()).isEqualTo("No user exists with Id 99");
 
     }
 }

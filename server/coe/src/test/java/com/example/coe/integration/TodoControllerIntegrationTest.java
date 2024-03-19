@@ -1,12 +1,14 @@
 package com.example.coe.integration;
 
 import com.example.coe.integration.extensions.DockerComposeExtension;
+import com.example.coe.integration.responses.ErrorItemResponse;
 import com.example.coe.integration.responses.ErrorResponse;
 import com.example.coe.models.todos.CreateTodoViewModel;
 import com.example.coe.models.todos.TodoDetailViewModel;
 import com.example.coe.models.todos.TodoViewModel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.javacrumbs.jsonunit.core.Option;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,9 +23,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.LocalDate;
 import java.util.List;
 
+import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith({SpringExtension.class, DockerComposeExtension.class})
@@ -119,6 +124,46 @@ public class TodoControllerIntegrationTest {
         assertThat(todoResponse.getDeadline())
                 .isEqualTo(newTodoRequest.getDeadline());
     }
+
+    @Test
+    void createTodo_whenSuppliedWithInvalidData_returnsBadRequest() throws Exception {
+
+        var newTodo = new CreateTodoViewModel();
+
+        var result = mockMvc.perform(post("/todos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newTodo)))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
+
+        ErrorItemResponse[] expectedFieldErrors = new ErrorItemResponse[]{
+                new ErrorItemResponse("userId", "must not be null"),
+                new ErrorItemResponse("description", "must not be blank"),
+                new ErrorItemResponse("deadline", "must not be null"),
+        };
+
+        assertThat(errorResponse.getStatus()).isEqualTo(BAD_REQUEST.value());
+        assertThat(errorResponse.getMessage()).isEqualTo("validation error");
+        assertThatJson(errorResponse.getFieldErrors())
+                .when(Option.IGNORING_ARRAY_ORDER)
+                .isEqualTo(expectedFieldErrors);
+    }
+
+//    @Test
+//    void updateTodo_whenSuppliedWithValidData_returnsNoContent() throws Exception {
+//        UpdateTodoViewModel updateTodo = new UpdateTodoViewModel(
+//                1,
+//                "Collect Prescription from Chemist",
+//                2023-10-2,
+//                2024-3-3);
+//
+//        mockMvc.perform(put("/users/1")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(updateTodo)))
+//                .andExpect(status().isNoContent());
+//    }
 
 
 }
