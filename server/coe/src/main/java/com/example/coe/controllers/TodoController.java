@@ -84,7 +84,7 @@ public class TodoController {
     @Operation(summary = "Delete Todo")
     public ResponseEntity<Void> deleteTodo(@PathVariable int todoId) {
         var existingTodo = todoRepository.findById(todoId)
-                .orElseThrow(() -> new NotFoundException("No todo exists with Id:", todoId));
+                .orElseThrow(() -> new NotFoundException("No todo exists with Id", todoId));
 
         todoRepository.delete(existingTodo);
 

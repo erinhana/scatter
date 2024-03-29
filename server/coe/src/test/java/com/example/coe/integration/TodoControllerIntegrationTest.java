@@ -3,9 +3,12 @@ package com.example.coe.integration;
 import com.example.coe.integration.extensions.DockerComposeExtension;
 import com.example.coe.integration.responses.ErrorItemResponse;
 import com.example.coe.integration.responses.ErrorResponse;
+import com.example.coe.models.activities.UpdateActivityViewModel;
+import com.example.coe.models.blockers.UpdateBlockerViewModel;
 import com.example.coe.models.todos.CreateTodoViewModel;
 import com.example.coe.models.todos.TodoDetailViewModel;
 import com.example.coe.models.todos.TodoViewModel;
+import com.example.coe.models.todos.UpdateTodoViewModel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.javacrumbs.jsonunit.core.Option;
@@ -21,14 +24,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith({SpringExtension.class, DockerComposeExtension.class})
@@ -151,19 +154,64 @@ public class TodoControllerIntegrationTest {
                 .isEqualTo(expectedFieldErrors);
     }
 
+    @Test
+    void updateTodo_whenSuppliedWithValidData_returnsNoContent() throws Exception {
+        var updateTodo = new UpdateTodoViewModel(1, "Collect Prescription from Chemist", LocalDate.of(2023, 10, 2), LocalDateTime.now());
+
+        mockMvc.perform(put("/todos/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateTodo)))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void updateTodo_whenSuppliedWithValidDataButNoRecord_returnsNotFound() throws Exception {
+        var updateTodo = new UpdateTodoViewModel(98, "Cut the grass", LocalDate.of(2024, 3, 29), LocalDateTime.now());
+
+        mockMvc.perform(put("/todos/98")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateTodo)))
+                .andExpect(status().isNotFound());
+    }
+
 //    @Test
-//    void updateTodo_whenSuppliedWithValidData_returnsNoContent() throws Exception {
-//        UpdateTodoViewModel updateTodo = new UpdateTodoViewModel(
-//                1,
-//                "Collect Prescription from Chemist",
-//                2023-10-2,
-//                2024-3-3);
+//    void updateTodo_whenSuppliedWithInValidData_returnsBadRequest() throws Exception {
+//        var updateTodo = new UpdateTodoViewModel(10, "", LocalDate.of(2024, 3, 29), LocalDateTime.now());
 //
-//        mockMvc.perform(put("/users/1")
+//        mockMvc.perform(put("/todos/10")
 //                        .contentType(MediaType.APPLICATION_JSON)
 //                        .content(objectMapper.writeValueAsString(updateTodo)))
-//                .andExpect(status().isNoContent());
+//                .andExpect(status().isBadRequest())
+//                .andReturn();
+//
+//        var errorResponse = objectMapper.readValue(updateTodo.getResponse().getContentAsByteArray(), ErrorResponse.class);
+//
+//        assertThat(errorResponse.getStatus()).isEqualTo(BAD_REQUEST.value());
+//        assertThat(errorResponse.getMessage()).isEqualTo("validation error");
+//
 //    }
+
+    @Test
+    void deleteTodo_whenCalledWithValidId_returnsIsNoContent() throws Exception {
+        var result = mockMvc.perform(delete("/todos/12"))
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        assertThat(result.getResponse().getContentAsByteArray()).isEmpty();
+    }
+
+    @Test
+    void deleteTodo_whenCalledWithInvalidId_throwsNotFoundException() throws Exception {
+        var result = mockMvc.perform(delete("/todos/99"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
+        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
+
+        assertThat(errorResponse.getStatus()).isEqualTo(NOT_FOUND.value());
+        assertThat(errorResponse.getMessage()).isEqualTo("No todo exists with Id");
+
+    }
 
 
 }
