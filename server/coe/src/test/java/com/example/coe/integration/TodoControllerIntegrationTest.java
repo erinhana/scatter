@@ -174,22 +174,29 @@ public class TodoControllerIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
-//    @Test
-//    void updateTodo_whenSuppliedWithInValidData_returnsBadRequest() throws Exception {
-//        var updateTodo = new UpdateTodoViewModel(10, "", LocalDate.of(2024, 3, 29), LocalDateTime.now());
-//
-//        mockMvc.perform(put("/todos/10")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(updateTodo)))
-//                .andExpect(status().isBadRequest())
-//                .andReturn();
-//
-//        var errorResponse = objectMapper.readValue(updateTodo.getResponse().getContentAsByteArray(), ErrorResponse.class);
-//
-//        assertThat(errorResponse.getStatus()).isEqualTo(BAD_REQUEST.value());
-//        assertThat(errorResponse.getMessage()).isEqualTo("validation error");
-//
-//    }
+    @Test
+    void updateTodo_whenSuppliedWithInValidData_returnsBadRequest() throws Exception {
+        var updateTodo = new UpdateTodoViewModel(
+                10,
+                "",
+                LocalDate.of(2024, 3, 30),
+                LocalDateTime.now()
+        );
+
+        var result = mockMvc.perform(put("/todos/10")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateTodo)))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        var errorResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), ErrorResponse.class);
+
+        assertThat(errorResponse.getStatus()).isEqualTo(BAD_REQUEST.value());
+        assertThat(errorResponse.getMessage()).isEqualTo("validation error");
+
+    }
+
+//    (10, "", LocalDate.of(2024, 3, 30), LocalDateTime.now());
 
     @Test
     void deleteTodo_whenCalledWithValidId_returnsIsNoContent() throws Exception {
