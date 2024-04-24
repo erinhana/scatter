@@ -179,11 +179,12 @@ public class TodoControllerIntegrationTest {
         var updateTodo = new UpdateTodoViewModel(
                 10,
                 "",
-                LocalDate.of(2024, 3, 30),
+                LocalDate.of(2023, 9,11),
                 LocalDateTime.now()
+
         );
 
-        var result = mockMvc.perform(put("/todos/10")
+        var result = mockMvc.perform(put("/todos/12")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateTodo)))
                 .andExpect(status().isBadRequest())

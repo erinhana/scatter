@@ -15,6 +15,7 @@ public class MappingsConfig {
     public void addMappings() {
         mapper.addSourceToTargetMapping(new BlockerToBlockerViewModel());
         mapper.addSourceToTargetMapping(new ActivityToActivityViewModel());
+        mapper.addSourceToTargetMapping(new ActivityToActivityDetailViewModel());
         mapper.addSourceToTargetMapping(new UserToUserDetailViewModel());
         mapper.addSourceToTargetMapping(new TodoToTodoViewModel());
         mapper.addSourceToTargetMapping(new TodoToTodoDetailViewModel());
