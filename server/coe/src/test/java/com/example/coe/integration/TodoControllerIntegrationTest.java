@@ -156,9 +156,9 @@ public class TodoControllerIntegrationTest {
 
     @Test
     void updateTodo_whenSuppliedWithValidData_returnsNoContent() throws Exception {
-        var updateTodo = new UpdateTodoViewModel(1, "Collect Prescription from Chemist", LocalDate.of(2023, 10, 2), LocalDateTime.now());
+        var updateTodo = new UpdateTodoViewModel(9, "Bake a chocolate cake", LocalDate.of(2023, 10, 2), LocalDateTime.now());
 
-        mockMvc.perform(put("/todos/1")
+        mockMvc.perform(put("/todos/11")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateTodo)))
                 .andExpect(status().isNoContent());
@@ -196,8 +196,6 @@ public class TodoControllerIntegrationTest {
         assertThat(errorResponse.getMessage()).isEqualTo("validation error");
 
     }
-
-//    (10, "", LocalDate.of(2024, 3, 30), LocalDateTime.now());
 
     @Test
     void deleteTodo_whenCalledWithValidId_returnsIsNoContent() throws Exception {
