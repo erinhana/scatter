@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,7 +55,14 @@ public class TodoController {
     @Operation(summary = "Create Todo")
     public ResponseEntity<TodoViewModel> createTodo(@RequestBody @Valid CreateTodoViewModel model) {
 
+        var user = userRepository.findById(model.getUserId()).orElseThrow(() -> new NotFoundException("User not found"));
+
         var newTodo = mapper.map(model, Todo.class);
+
+        newTodo.setUser(user);
+        newTodo.setCreatedAt(LocalDateTime.now());
+        newTodo.setUpdatedAt(LocalDateTime.now());
+
         var createdTodo = todoRepository.save(newTodo);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(createdTodo, TodoViewModel.class));
@@ -76,7 +84,7 @@ public class TodoController {
     @Operation(summary = "Delete Todo")
     public ResponseEntity<Void> deleteTodo(@PathVariable int todoId) {
         var existingTodo = todoRepository.findById(todoId)
-                .orElseThrow(() -> new NotFoundException("No todo exists with Id:", todoId));
+                .orElseThrow(() -> new NotFoundException("No todo exists with Id", todoId));
 
         todoRepository.delete(existingTodo);
 

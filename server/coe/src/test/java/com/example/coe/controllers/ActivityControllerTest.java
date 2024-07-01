@@ -1,12 +1,14 @@
 package com.example.coe.controllers;
 
 import com.example.coe.entities.Activity;
+import com.example.coe.entities.Todo;
 import com.example.coe.exception.NotFoundException;
 import com.example.coe.models.activities.ActivityDetailViewModel;
 import com.example.coe.models.activities.ActivityViewModel;
 import com.example.coe.models.activities.CreateActivityViewModel;
 import com.example.coe.models.activities.UpdateActivityViewModel;
 import com.example.coe.repositories.ActivityRepository;
+import com.example.coe.repositories.TodoRepository;
 import com.example.coe.utils.mapper.Mapper;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.Test;
@@ -28,6 +30,8 @@ import static org.mockito.Mockito.*;
 public class ActivityControllerTest {
     @Mock
     private ActivityRepository activityRepository;
+    @Mock
+    private TodoRepository todoRepository;
     @Mock
     private Mapper mapper;
     @InjectMocks
@@ -84,7 +88,7 @@ public class ActivityControllerTest {
 
         // Act & Assert
         ThrowableAssert.ThrowingCallable throwingCallable = () -> activityController.getActivity(1);
-        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("Activity not found");
+        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("No activity exists with this id");
     }
 
     @Test
@@ -95,7 +99,9 @@ public class ActivityControllerTest {
         var activity = new Activity();
         var createdActivity = new Activity();
         var activityViewModel = new ActivityViewModel();
+        var todo = new Todo();
 
+        when(todoRepository.findById(any())).thenReturn(Optional.of(todo));
         when(mapper.map(createActivityViewModel, Activity.class)).thenReturn(activity);
         when(activityRepository.save(activity)).thenReturn(createdActivity);
         when(mapper.map(createdActivity, ActivityViewModel.class)).thenReturn(activityViewModel);
@@ -142,7 +148,7 @@ public class ActivityControllerTest {
 
         // Act & Assert
         ThrowableAssert.ThrowingCallable throwingCallable = () -> activityController.updateActivity(1, updateActivityViewModel);
-        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("Activity not found");
+        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("No activity exists with this Id");
     }
 
     @Test
@@ -171,6 +177,6 @@ public class ActivityControllerTest {
 
         // Act & Assert
         ThrowableAssert.ThrowingCallable throwingCallable = () -> activityController.deleteActivity(1);
-        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("No activity exists with Id");
+        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("No activity exists with this Id");
     }
 }

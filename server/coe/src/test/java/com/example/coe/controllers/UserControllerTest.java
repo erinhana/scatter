@@ -1,5 +1,6 @@
 package com.example.coe.controllers;
 
+import com.example.coe.entities.ActivityBlocker;
 import com.example.coe.entities.Todo;
 import com.example.coe.entities.User;
 import com.example.coe.exception.NotFoundException;
@@ -8,6 +9,7 @@ import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailViewModel;
 import com.example.coe.models.users.UserViewModel;
+import com.example.coe.repositories.ActivityBlockerRepository;
 import com.example.coe.repositories.TodoRepository;
 import com.example.coe.repositories.UserRepository;
 import com.example.coe.utils.mapper.Mapper;
@@ -22,6 +24,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -39,6 +42,9 @@ public class UserControllerTest {
     private UserRepository userRepository;
     @Mock
     private TodoRepository todoRepository;
+
+    @Mock
+    private ActivityBlockerRepository activityBlockerRepository;
     @Mock
     private Mapper mapper;
     @InjectMocks
@@ -68,12 +74,14 @@ public class UserControllerTest {
     }
 
     @Test
-    void getUser_whenCalledWithValidId_retrieveUser() throws Exception {
+    void getUser_whenCalledWithValidId_retrieveUser() {
 
         // Arrange: Set up test data
         var user = new User();
         var userDetailViewModel = new UserDetailViewModel();
+        var activityBlockers = new ArrayList<ActivityBlocker>();
 
+        when(activityBlockerRepository.findActivityBlockersByUserId(1)).thenReturn(activityBlockers);
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
         when(mapper.map(user, UserDetailViewModel.class)).thenReturn(userDetailViewModel);
 
@@ -97,7 +105,7 @@ public class UserControllerTest {
 
         // Act & Assert
         ThrowableAssert.ThrowingCallable throwingCallable = () -> userController.getUser(1);
-        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("User not found");
+        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("No user exists with Id");
     }
 
     @Test
@@ -165,7 +173,7 @@ public class UserControllerTest {
 
         // Act & Assert
         ThrowableAssert.ThrowingCallable throwingCallable = () -> userController.updateUser(1, updateUserViewModel);
-        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("User not found");
+        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("No user exists with Id 1");
     }
 
     @Test
@@ -191,7 +199,7 @@ public class UserControllerTest {
 
         // Act & Assert
         ThrowableAssert.ThrowingCallable throwingCallable = () -> userController.deleteUser(1);
-        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("User not found");
+        assertThatThrownBy(throwingCallable).isInstanceOf(NotFoundException.class).hasMessageContaining("No user exists with Id 1");
     }
 
     @Test

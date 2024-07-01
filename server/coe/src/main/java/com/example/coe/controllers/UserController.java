@@ -1,5 +1,6 @@
 package com.example.coe.controllers;
 
+import com.example.coe.entities.Todo;
 import com.example.coe.entities.User;
 import com.example.coe.exception.NotFoundException;
 import com.example.coe.models.todos.TodoViewModel;
@@ -7,6 +8,7 @@ import com.example.coe.models.users.CreateUserViewModel;
 import com.example.coe.models.users.UpdateUserViewModel;
 import com.example.coe.models.users.UserDetailViewModel;
 import com.example.coe.models.users.UserViewModel;
+import com.example.coe.repositories.ActivityBlockerRepository;
 import com.example.coe.repositories.TodoRepository;
 import com.example.coe.repositories.UserRepository;
 import com.example.coe.utils.mapper.Mapper;
@@ -27,7 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-
+    private final ActivityBlockerRepository activityBlockerRepository;
     private final UserRepository userRepository;
     private final TodoRepository todoRepository;
     private final Mapper mapper;
@@ -51,9 +53,25 @@ public class UserController {
     @Operation(summary = "Get User")
     public ResponseEntity<UserDetailViewModel> getUser(@PathVariable int userId) {
         var user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
+                .orElseThrow(() -> new NotFoundException("No user exists with Id", userId));
 
-        return ResponseEntity.ok(mapper.map(user, UserDetailViewModel.class));
+        var userDetails = mapper.map(user, UserDetailViewModel.class);
+
+        var todo = todoRepository.findByUserId(userId);
+
+        int numberOfTodosCompleted = 0;
+
+        for (Todo value : todo)
+            if (value.getCompletedAt() != null)
+                numberOfTodosCompleted++;
+
+        userDetails.setNumberOfTodosCreated(todo.size());
+        userDetails.setNumberOfTodosInProgress(todo.size() - numberOfTodosCompleted);
+        userDetails.setNumberOfTodosCompleted(numberOfTodosCompleted);
+
+        userDetails.setNumberOfActivityBlockers(activityBlockerRepository.findActivityBlockersByUserId(userId).size());
+
+        return ResponseEntity.ok(userDetails);
 
 
     }
@@ -74,7 +92,7 @@ public class UserController {
     @Operation(summary = "Update User")
     public ResponseEntity<Void> updateUser(@PathVariable Integer userId, @RequestBody @Valid UpdateUserViewModel model) {
         var user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
+                .orElseThrow(() -> new NotFoundException("No user exists with Id %d", userId));
 
         mapper.map(model, user);
         user.setPassword(passwordEncoder.encode(model.getPassword()));
@@ -88,7 +106,7 @@ public class UserController {
     @Operation(summary = "Delete User")
     public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
         var existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("No user exists with Id:", userId));
+                .orElseThrow(() -> new NotFoundException("No user exists with Id %d", userId));
 
         userRepository.delete(existingUser);
 

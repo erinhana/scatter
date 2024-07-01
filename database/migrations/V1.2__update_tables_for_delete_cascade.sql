@@ -1,4 +1,5 @@
-ALTER TABLE activity_blockers
-   DROP CONSTRAINT activity_blockers_blockers_blocker_id_fk
- , ADD  CONSTRAINT activity_blockers_blockers_blocker_id_fk
-   FOREIGN KEY (blocker_id) REFERENCES blockers (id) ON DELETE CASCADE;
+ALTER TABLE activity_blockers 
+    DROP CONSTRAINT activty_blockers_activities_activity_id_fk
+  , ADD CONSTRAINT activty_blockers_activities_activity_id_fk
+    FOREIGN KEY (activity_id) REFERENCES activities (id) ON DELETE CASCADE; 
+

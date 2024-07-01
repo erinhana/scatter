@@ -51,9 +51,9 @@ public class BlockerControllerIntegrationTest {
         assertThat(blockerDetailResponse.getId())
                 .isEqualTo(1);
         assertThat(blockerDetailResponse.getTitle())
-                .isEqualTo("No study guide");
+                .isEqualTo("Misplaced car keys");
         assertThat(blockerDetailResponse.getDescription())
-                .isEqualTo("Lost study guide");
+                .isEqualTo("No spare set");
         assertThat(blockerDetailResponse.getCreatedAt())
                 .isNotNull();
         assertThat(blockerDetailResponse.getUpdatedAt())
@@ -93,9 +93,9 @@ public class BlockerControllerIntegrationTest {
         assertThat(blockerResponse.get(0).getUserId())
                 .isEqualTo(1);
         assertThat(blockerResponse.get(0).getTitle())
-                .isEqualTo("No study guide");
+                .isEqualTo("Misplaced car keys");
         assertThat(blockerResponse.get(0).getDescription())
-                .isEqualTo("Lost study guide");
+                .isEqualTo("No spare set");
         assertThat(blockerResponse.get(0).getBlockerTypeId())
                 .isEqualTo(1);
 
@@ -135,7 +135,7 @@ public class BlockerControllerIntegrationTest {
         var blockerResponse = objectMapper.readValue(result.getResponse().getContentAsByteArray(), BlockerViewModel.class);
 
         assertThat(blockerResponse.getId())
-                .isEqualTo(3);
+                .isEqualTo(4);
         assertThat(blockerResponse.getTitle())
                 .isEqualTo("Test blocker");
         assertThat(blockerResponse.getDescription())
@@ -243,7 +243,6 @@ public class BlockerControllerIntegrationTest {
 
         assertThat(errorResponse.getStatus()).isEqualTo(NOT_FOUND.value());
         assertThat(errorResponse.getMessage()).isEqualTo("No blocker exists with Id");
-
 
     }
 

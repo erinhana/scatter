@@ -1,11 +1,13 @@
 package com.example.coe.models.todos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,9 +15,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateTodoViewModel {
-    @NotBlank
+    @NotNull
     private int userId;
+    @NotBlank
     private String description;
-    private LocalDateTime deadline;
+    private LocalDate deadline;
     private LocalDateTime completedAt;
 }
